@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "BnUZs8/msAxcyNR2O2dEDBo1+Y4lJH5qLFHcFtSgFFX6ZB7BLy6Ea/8jlVihfpMW5Nl+FuVyAlIVydoMcj8iew==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\11cal\\Code\\spending-tracker-enhanced\\spending-tracker-enhanced-controller\\spending-tracker-enhanced-controller.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\11cal\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.2\\microsoft.aspnetcore.openapi.7.0.2.nupkg.sha512",
+    "C:\\Users\\11cal\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "C:\\Users\\11cal\\.nuget\\packages\\microsoft.openapi\\1.4.3\\microsoft.openapi.1.4.3.nupkg.sha512",
+    "C:\\Users\\11cal\\.nuget\\packages\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
+    "C:\\Users\\11cal\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.4.0\\swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
+    "C:\\Users\\11cal\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.4.0\\swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",
+    "C:\\Users\\11cal\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.4.0\\swashbuckle.aspnetcore.swaggerui.6.4.0.nupkg.sha512"
+  ],
+  "logs": []
+}

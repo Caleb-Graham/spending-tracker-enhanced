@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "spending-tracker-enhanced": {
+    "spending-tracker-enhanced-ng": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/spending-tracker-enhanced",
+            "outputPath": "dist/spending-tracker-enhanced-ng",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -67,10 +67,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "spending-tracker-enhanced:build:production"
+              "buildTarget": "spending-tracker-enhanced-ng:build:production"
             },
             "development": {
-              "buildTarget": "spending-tracker-enhanced:build:development"
+              "buildTarget": "spending-tracker-enhanced-ng:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -78,7 +78,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "spending-tracker-enhanced:build"
+            "buildTarget": "spending-tracker-enhanced-ng:build"
           }
         },
         "test": {
@@ -104,6 +104,6 @@
     }
   },
   "cli": {
-    "analytics": "000534b4-54c0-4478-82f5-bb932c191120"
+    "analytics": "74a77b71-9b20-487b-a814-f9ce4b61d378"
   }
 }

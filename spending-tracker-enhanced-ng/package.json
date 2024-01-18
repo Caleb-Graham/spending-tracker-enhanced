@@ -1,5 +1,5 @@
 {
-  "name": "spending-tracker-enhanced",
+  "name": "spending-tracker-enhanced-ng",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:spending-tracker-enhanced": "node dist/spending-tracker-enhanced/server/server.mjs"
+    "serve:ssr:spending-tracker-enhanced-ng": "node dist/spending-tracker-enhanced-ng/server/server.mjs"
   },
   "private": true,
   "dependencies": {
