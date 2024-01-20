@@ -1,14 +1,32 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { CSVService } from './services/CSVService';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [CommonModule, RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'spending-tracker-enhanced-ng';
+  constructor(private csvService: CSVService) {}
+
+  onFileSelected($event: any) {
+    console.log('event', $event);
+    const fileList: FileList | null = $event.target.files;
+
+    if (fileList && fileList.length > 0) {
+      const file: File = fileList[0];
+
+      // Call a method to process the file or directly pass it to the service
+      this.processFile(file);
+    } else {
+      console.error('No file selected');
+    }
+  }
+
+  private processFile(file: File) {
+    // You can perform additional processing on the file if needed
+    // For now, let's pass it to the service
+    console.log('file', file);
+    this.csvService.uploadFile(file).subscribe((x) => console.log('x', x));
+  }
 }

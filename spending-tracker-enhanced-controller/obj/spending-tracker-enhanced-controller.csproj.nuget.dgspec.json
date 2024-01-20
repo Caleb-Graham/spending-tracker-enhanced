@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\11cal\\Code\\spending-tracker-enhanced\\spending-tracker-enhanced-controller\\spending-tracker-enhanced-controller.csproj": {}
+    "c:\\Users\\11cal\\Code\\spending-tracker-enhanced\\spending-tracker-enhanced-controller\\spending-tracker-enhanced-controller.csproj": {}
   },
   "projects": {
-    "C:\\Users\\11cal\\Code\\spending-tracker-enhanced\\spending-tracker-enhanced-controller\\spending-tracker-enhanced-controller.csproj": {
+    "c:\\Users\\11cal\\Code\\spending-tracker-enhanced\\spending-tracker-enhanced-controller\\spending-tracker-enhanced-controller.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\11cal\\Code\\spending-tracker-enhanced\\spending-tracker-enhanced-controller\\spending-tracker-enhanced-controller.csproj",
+        "projectUniqueName": "c:\\Users\\11cal\\Code\\spending-tracker-enhanced\\spending-tracker-enhanced-controller\\spending-tracker-enhanced-controller.csproj",
         "projectName": "spending-tracker-enhanced-controller",
-        "projectPath": "C:\\Users\\11cal\\Code\\spending-tracker-enhanced\\spending-tracker-enhanced-controller\\spending-tracker-enhanced-controller.csproj",
+        "projectPath": "c:\\Users\\11cal\\Code\\spending-tracker-enhanced\\spending-tracker-enhanced-controller\\spending-tracker-enhanced-controller.csproj",
         "packagesPath": "C:\\Users\\11cal\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\11cal\\Code\\spending-tracker-enhanced\\spending-tracker-enhanced-controller\\obj\\",
+        "outputPath": "c:\\Users\\11cal\\Code\\spending-tracker-enhanced\\spending-tracker-enhanced-controller\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\11cal\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -38,6 +38,14 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "CsvHelper": {
+              "target": "Package",
+              "version": "[30.0.1, )"
+            },
+            "Microsoft.AspNetCore.Cors": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[7.0.2, )"

@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\spending-tracker-enhanced-controller.props" />
+</Project>
