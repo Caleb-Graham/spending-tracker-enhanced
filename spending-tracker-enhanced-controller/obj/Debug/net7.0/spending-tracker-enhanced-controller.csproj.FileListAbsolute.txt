@@ -32,3 +32,6 @@ c:\Users\11cal\Code\spending-tracker-enhanced\spending-tracker-enhanced-controll
 c:\Users\11cal\Code\spending-tracker-enhanced\spending-tracker-enhanced-controller\obj\Debug\net7.0\spending-tracker-enhanced-controller.pdb
 c:\Users\11cal\Code\spending-tracker-enhanced\spending-tracker-enhanced-controller\obj\Debug\net7.0\spending-tracker-enhanced-controller.genruntimeconfig.cache
 c:\Users\11cal\Code\spending-tracker-enhanced\spending-tracker-enhanced-controller\obj\Debug\net7.0\ref\spending-tracker-enhanced-controller.dll
+c:\Users\11cal\Code\spending-tracker-enhanced\spending-tracker-enhanced-controller\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+c:\Users\11cal\Code\spending-tracker-enhanced\spending-tracker-enhanced-controller\bin\Debug\net7.0\Microsoft.Extensions.Logging.Abstractions.dll
+c:\Users\11cal\Code\spending-tracker-enhanced\spending-tracker-enhanced-controller\bin\Debug\net7.0\Npgsql.dll

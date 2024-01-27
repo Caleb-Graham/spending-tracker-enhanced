@@ -8,9 +8,17 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
+import { BudgetComponent } from './components/budget/budget.component';
+import { SummaryComponent } from './components/summary/summary.component';
+import { NetWorthComponent } from './components/net-worth/net-worth.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    BudgetComponent,
+    SummaryComponent,
+    NetWorthComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
