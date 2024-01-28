@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BudgetComponent } from './components/budget/budget.component';
 import { SummaryComponent } from './components/summary/summary.component';
 import { NetWorthComponent } from './components/net-worth/net-worth.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { NetWorthComponent } from './components/net-worth/net-worth.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    NgxChartsModule,
     HttpClientModule,
   ],
   providers: [provideClientHydration()],
