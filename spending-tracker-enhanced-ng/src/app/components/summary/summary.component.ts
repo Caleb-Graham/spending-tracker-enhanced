@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CSVService } from '../../services/CSVService';
 
 @Component({
   selector: 'app-summary',
@@ -36,8 +37,16 @@ export class SummaryComponent {
   colorScheme: any = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA'],
   };
+  categories: any[] = [];
 
-  constructor() {}
+  constructor(private csvService: CSVService) {}
+
+  ngOnInit() {
+    this.csvService.getAllExpenses().subscribe((x: any) => {
+      console.log('model', x);
+      this.categories = x;
+    });
+  }
 
   onSelect(data: any): void {
     console.log('Item clicked', JSON.parse(JSON.stringify(data)));

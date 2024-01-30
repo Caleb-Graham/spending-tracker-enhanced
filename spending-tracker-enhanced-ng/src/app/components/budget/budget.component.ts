@@ -6,14 +6,8 @@ import { CSVService } from '../../services/CSVService';
   templateUrl: './budget.component.html',
   styleUrl: './budget.component.scss',
 })
-export class BudgetComponent implements OnInit {
+export class BudgetComponent {
   constructor(private csvService: CSVService) {}
-
-  ngOnInit() {
-    this.csvService.getAllExpenses().subscribe((x: any) => {
-      console.log('model', x);
-    });
-  }
 
   onFileSelected($event: any) {
     console.log('event', $event);
