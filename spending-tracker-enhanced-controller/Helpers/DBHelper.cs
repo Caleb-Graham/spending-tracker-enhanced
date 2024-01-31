@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 
-public class PostgresUtility
+public class DBHelper
 {
     private readonly string _connectionString;
 
-    public PostgresUtility(string connectionString)
+    public DBHelper(string connectionString)
     {
         _connectionString = connectionString;
     }

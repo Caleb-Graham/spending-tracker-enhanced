@@ -33,7 +33,7 @@ public class CSVController : ControllerBase
                 // Log or handle the situation where the connection string is not found
                 return BadRequest("Connection string not found in appsettings.json");
             }
-            var postgresUtility = new PostgresUtility(connectionString);
+            var dbHelper = new DBHelper(connectionString);
 
             if (file == null || file.Length == 0)
                 return BadRequest("File is not selected");
@@ -57,7 +57,7 @@ public class CSVController : ControllerBase
                     { "@Account", record.Account }
                 };
 
-                    await postgresUtility.ExecuteNonQueryAsync("INSERT INTO expenses (Date, Category, Amount, Note, Account) VALUES (@Date, @Category, @Amount, @Note, @Account)", parameters);
+                    await dbHelper.ExecuteNonQueryAsync("INSERT INTO expenses (Date, Category, Amount, Note, Account) VALUES (@Date, @Category, @Amount, @Note, @Account)", parameters);
                 }
             }
 
@@ -88,10 +88,10 @@ public class CSVController : ControllerBase
                 return BadRequest("Connection string not found in appsettings.json");
             }
 
-            var postgresUtility = new PostgresUtility(connectionString);
+            var dbHelper = new DBHelper(connectionString);
 
             // Retrieve all data from the "expenses" table
-            var expenses = await postgresUtility.QueryAsync<CSVTransactionModel>("SELECT * FROM expenses");
+            var expenses = await dbHelper.QueryAsync<CSVTransactionModel>("SELECT * FROM expenses");
 
             // Handle the retrieved data as needed
             return Ok(expenses);

@@ -1,21 +1,19 @@
-<p>
-    <mat-toolbar class="toolbar" color="primary">
-        <span>
-            <button *ngIf="mobileView" mat-icon-button class="" >
-              <mat-icon>menu</mat-icon>
-            </button>
-            <span>Enhanced Spending Tracker</span>
-        </span>
+  <mat-toolbar class="toolbar" color="primary">
       <span>
-          <button mat-button class="" routerLink="">
-            My Budget
+          <button *ngIf="mobileView" mat-icon-button class="" >
+            <mat-icon>menu</mat-icon>
           </button>
-          <button mat-button class="">
-            Summary
-          </button>
-          <button mat-button class="">
-            Net Worth
-          </button>
+          <span class="clickable" routerLink="">Enhanced Spending Tracker</span>
       </span>
-    </mat-toolbar>
-  </p>
+    <span>
+        <button mat-button class="" routerLink="/budget">
+          My Budget
+        </button>
+        <button mat-button class="" routerLink="/summary">
+          Summary
+        </button>
+        <button mat-button class="" routerLink="/net-worth">
+          Net Worth
+        </button>
+    </span>
+  </mat-toolbar>
