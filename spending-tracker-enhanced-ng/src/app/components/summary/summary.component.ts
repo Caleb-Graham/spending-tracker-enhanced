@@ -1,30 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ExpenseService } from '../../services/expense-service';
+import { ExpenseModel } from '../../models/expenses.model';
 
 @Component({
   selector: 'app-summary',
   templateUrl: './summary.component.html',
   styleUrl: './summary.component.scss',
 })
-export class SummaryComponent {
-  single: any[] = [
-    {
-      name: 'Germany',
-      value: 8940000,
-    },
-    {
-      name: 'USA',
-      value: 5000000,
-    },
-    {
-      name: 'France',
-      value: 7200000,
-    },
-    {
-      name: 'UK',
-      value: 6200000,
-    },
-  ];
-  view: [number, number] = [700, 400];
+export class SummaryComponent implements OnInit {
+  expenses?: ExpenseModel[];
+  expensePieChartData: any[] = [];
+  view: [number, number] = [1000, 750];
 
   // options
   gradient: boolean = true;
@@ -37,7 +23,20 @@ export class SummaryComponent {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA'],
   };
 
-  constructor() {}
+  constructor(private expenseService: ExpenseService) {}
+
+  ngOnInit() {
+    this.expenseService.getExpenses().subscribe((expenses) => {
+      console.log('og expense', expenses);
+      this.expenses = expenses;
+
+      this.expensePieChartData = this.expenses.map((expense) => ({
+        name: expense.category_Name,
+        value: Math.abs(expense.total_Amount),
+      }));
+      console.log('transformed expenses', this.expensePieChartData);
+    });
+  }
 
   onSelect(data: any): void {
     console.log('Item clicked', JSON.parse(JSON.stringify(data)));

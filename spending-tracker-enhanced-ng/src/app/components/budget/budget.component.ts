@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CSVService } from '../../services/CSVService';
+import { CSVService } from '../../services/csv-service';
 
 @Component({
   selector: 'app-budget',
@@ -10,7 +10,6 @@ export class BudgetComponent {
   constructor(private csvService: CSVService) {}
 
   onFileSelected($event: any) {
-    console.log('event', $event);
     const fileList: FileList | null = $event.target.files;
 
     if (fileList && fileList.length > 0) {

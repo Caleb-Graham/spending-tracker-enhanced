@@ -34,6 +34,7 @@ public class CSVController : ControllerBase
                 return BadRequest("Connection string not found in appsettings.json");
             }
             var dbHelper = new DBHelper(connectionString);
+            var csvHelper = new CSVFileHelper();
 
             if (file == null || file.Length == 0)
                 return BadRequest("File is not selected");
@@ -48,16 +49,44 @@ public class CSVController : ControllerBase
 
                 foreach (var record in records)
                 {
-                    var parameters = new Dictionary<string, object>
-                {
-                    { "@Date", record.Date },
-                    { "@Category", record.Category },
-                    { "@Amount", record.Amount },
-                    { "@Note", record.Note },
-                    { "@Account", record.Account }
-                };
+                    var recordType = csvHelper.GetType(record.Amount);
 
-                    await dbHelper.ExecuteNonQueryAsync("INSERT INTO expenses (Date, Category, Amount, Note, Account) VALUES (@Date, @Category, @Amount, @Note, @Account)", parameters);
+                    await dbHelper.ExecuteNonQueryAsync(@"
+                   INSERT INTO categories (name, type)
+                    VALUES (@Category, @Type)
+                    ON CONFLICT (name, type) DO NOTHING;", new Dictionary<string, object>
+                    {
+                        { "@Category", record.Category },
+                        { "@Type", recordType }
+                    });
+
+                    var categoryId = await csvHelper.GetCategoryID(record.Category, recordType, connectionString);
+                    var parameters = new Dictionary<string, object>
+                    {
+                        { "@Date", record.Date },
+                        { "@CategoryID", categoryId },
+                        { "@Amount", record.Amount },
+                        { "@Note", record.Note },
+                        { "@Account", record.Account }
+                    };
+
+                    if (record.Amount > 0)
+                    {
+                        await dbHelper.ExecuteNonQueryAsync(@"
+                        INSERT INTO income 
+                        (user_id, category_id, amount, description, date) 
+                        VALUES (1, @CategoryID, @Amount, @Note, @Date)", parameters);
+                    }
+
+                    if (record.Amount < 0)
+                    {
+                        await dbHelper.ExecuteNonQueryAsync(@"
+                        INSERT INTO expenses 
+                        (user_id, category_id, amount, description, date) 
+                        VALUES (1, @CategoryID, @Amount, @Note, @Date)", parameters);
+                    }
+
+
                 }
             }
 
@@ -73,8 +102,8 @@ public class CSVController : ControllerBase
         }
     }
 
-    [HttpGet("GetAllExpenses")]
-    public async Task<IActionResult> GetAllExpenses()
+    [HttpGet("GetExpenses")]
+    public async Task<IActionResult> GetExpenses()
     {
         try
         {
@@ -91,7 +120,7 @@ public class CSVController : ControllerBase
             var dbHelper = new DBHelper(connectionString);
 
             // Retrieve all data from the "expenses" table
-            var expenses = await dbHelper.QueryAsync<CSVTransactionModel>("SELECT * FROM expenses");
+            var expenses = await dbHelper.QueryAsync<ExpenseModel>("SELECT * FROM expenses");
 
             // Handle the retrieved data as needed
             return Ok(expenses);

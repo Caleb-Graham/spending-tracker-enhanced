@@ -1,5 +1,3 @@
-using System;
-
 public class CSVTransactionModel
 {
     public DateTime Date { get; set; }
