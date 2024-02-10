@@ -36,49 +36,7 @@ export class SummaryComponent implements OnInit {
     },
   ];
   schemeType = ScaleType.Ordinal;
-  sankeyData = [
-    { source: 'United States Of America', target: 'Japan', value: 50 },
-    { source: 'Germany', target: 'Japan', value: 80 },
-    { source: 'Germany', target: 'South Korea', value: 25 },
-    { source: 'France', target: 'South Korea', value: 30 },
-    { source: 'France', target: 'Italy', value: 10 },
-    { source: 'France', target: 'North Macedonia', value: 15 },
-    { source: 'India', target: 'Japan', value: 10 },
-    { source: 'Japan', target: 'UK', value: 60 },
-    { source: 'Japan', target: 'UK', value: 10 },
-    {
-      source: 'Japan',
-      target: 'Democratic Republic of São Tomé and Príncipe',
-      value: 50,
-    },
-    { source: 'Japan', target: 'Republic of Equatorial Guinea', value: 20 },
-    { source: 'South Korea', target: 'UK', value: 55 },
-    { source: 'Italy', target: 'UK', value: 10 },
-    {
-      source: 'North Macedonia',
-      target: 'Republic of Equatorial Guinea',
-      value: 15,
-    },
-    {
-      source: 'UK',
-      target: 'Independent and the Sovereign Republic of Kiribati',
-      value: 10,
-    },
-    {
-      source: 'UK',
-      target: 'Commonwealth of the Northern Mariana Islands',
-      value: 60,
-    },
-    { source: 'UK', target: 'Bosnia and Herzegovina', value: 25 },
-    { source: 'UK', target: 'Spain', value: 20 },
-    { source: 'UK', target: 'Bosnia and Herzegovina', value: 20 },
-    {
-      source: 'Republic of Equatorial Guinea',
-      target: 'Republic of Costa Rica',
-      value: 30,
-    },
-    { source: 'Republic of Equatorial Guinea', target: 'Portugal', value: 5 },
-  ];
+  sankeyData: any = [];
 
   constructor(
     private expenseService: ExpenseService,
@@ -93,10 +51,10 @@ export class SummaryComponent implements OnInit {
         name: expense.category_Name,
         value: Math.abs(expense.total_Amount),
       }));
+      console.log('transformed expenses', this.expensePieChartData);
     });
 
     this.incomeService.getIncome().subscribe((income) => {
-      console.log('og income', income);
       this.income = income;
 
       this.incomePieChartData = this.income.map((income) => ({
@@ -104,7 +62,36 @@ export class SummaryComponent implements OnInit {
         value: Math.abs(income.total_Amount),
       }));
       console.log('transformed income', this.incomePieChartData);
+      this.setSankeyData();
     });
+  }
+
+  setSankeyData() {
+    this.sankeyData = [];
+    if (!!this.income && this.income.length > 0) {
+      for (let index = 0; index < this.income.length; index++) {
+        const incomeItem = this.income[index];
+
+        this.sankeyData.push({
+          source: incomeItem.category_Name,
+          target: 'Income',
+          value: incomeItem.total_Amount,
+        });
+      }
+    }
+
+    if (!!this.expenses && this.expenses.length > 0) {
+      for (let index = 0; index < this.expenses.length; index++) {
+        const expensesItem = this.expenses[index];
+
+        this.sankeyData.push({
+          source: 'Income',
+          target: expensesItem.category_Name,
+          value: Math.abs(expensesItem.total_Amount),
+        });
+        console.log('sakey data', this.sankeyData);
+      }
+    }
   }
 
   onSelect(data: any): void {
