@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CSVService } from '../../services/csv-service';
+import { CSVService } from '../../services/csv.service';
 
 @Component({
   selector: 'app-budget',

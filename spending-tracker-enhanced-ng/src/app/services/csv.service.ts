@@ -24,13 +24,4 @@ export class CSVService {
       })
     );
   }
-
-  getAllExpenses(): Observable<any> {
-    return this.http.get<any[]>(`${this.apiUrl}/CSV/GetAllExpenses`).pipe(
-      catchError((error) => {
-        console.error('Get all expenses error:', error);
-        return throwError(() => new Error('Failed to get expenses'));
-      })
-    );
-  }
 }
