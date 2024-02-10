@@ -16,6 +16,7 @@ import { NetWorthComponent } from './components/net-worth/net-worth.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { HomeComponent } from './components/home/home.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { CategoriesComponent } from './components/categories/categories.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
     NetWorthComponent,
     HomeComponent,
     ToolbarComponent,
+    CategoriesComponent,
   ],
   imports: [
     BrowserModule,
