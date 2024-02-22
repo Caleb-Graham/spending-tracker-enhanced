@@ -4,17 +4,17 @@ namespace spending_tracker_enhanced_controller.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class IncomeController : ControllerBase
+public class CategoriesController : ControllerBase
 {
     private readonly IConfiguration _configuration;
 
-    public IncomeController(IConfiguration configuration)
+    public CategoriesController(IConfiguration configuration)
     {
         _configuration = configuration;
     }
 
-    [HttpGet("GetIncome")]
-    public async Task<IActionResult> GetIncome()
+    [HttpGet("GetCategories")]
+    public async Task<IActionResult> GetCategories()
     {
         try
         {
@@ -31,29 +31,17 @@ public class IncomeController : ControllerBase
             var dbHelper = new DBHelper(connectionString);
 
             // Retrieve all data from the "income" table
-            var income = await dbHelper.QueryAsync<IncomeModel>(@"
-                            SELECT
-                                categories.name AS category_name,
-                                SUM(income.amount) AS total_amount
-                            FROM
-                                income
-                            JOIN
-                                categories ON income.category_id = categories.category_id
-                            GROUP BY
-                                categories.name, categories.type
-                            ORDER BY
-                                total_amount DESC;
-                            ");
+            var categories = await dbHelper.QueryAsync<CategoriesModel>(@"SELECT * FROM Categories ORDER BY name");
 
             // Handle the retrieved data as needed
-            return Ok(income);
+            return Ok(categories);
         }
         catch (Exception ex)
         {
             // Log the exception for debugging purposes
             Console.WriteLine($"Error: {ex.Message}");
 
-            return BadRequest("Failed to retrieve data from the 'income' table");
+            return BadRequest("Failed to retrieve data from the 'categories' table");
         }
     }
 }

@@ -1,4 +1,10 @@
 <div class="categories-container">
-    <h1>Expenses</h1>
-    <h1>Income</h1>
+    <div class="expenses">
+        <h1>Expenses</h1>
+        <span *ngFor="let expenseCategory of expenseCategories">{{ expenseCategory.name }}</span>
+    </div>
+    <div class="income">
+        <h1>Income</h1>
+        <span *ngFor="let incomeCategory of incomeCategories">{{ incomeCategory.name }}</span>
+    </div>
 </div>

@@ -1,5 +1,18 @@
 .categories-container {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+}
+
+.expenses {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.income {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }

@@ -53,7 +53,6 @@ public class ExpensesController : ControllerBase
             // Log the exception for debugging purposes
             Console.WriteLine($"Error: {ex.Message}");
 
-            // You might want to provide a more user-friendly error message in a production environment
             return BadRequest("Failed to retrieve data from the 'expenses' table");
         }
     }
