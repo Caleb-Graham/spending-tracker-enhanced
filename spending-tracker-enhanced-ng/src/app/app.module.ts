@@ -17,6 +17,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { HomeComponent } from './components/home/home.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { CategoriesComponent } from './components/categories/categories.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { CategoriesComponent } from './components/categories/categories.componen
     HttpClientModule,
     MatIconModule,
     MatToolbarModule,
+    MatTabsModule,
   ],
   providers: [provideClientHydration()],
   bootstrap: [AppComponent],
