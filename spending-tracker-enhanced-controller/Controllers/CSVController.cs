@@ -102,36 +102,37 @@ public class CSVController : ControllerBase
         }
     }
 
-    [HttpGet("GetExpenses")]
-    public async Task<IActionResult> GetExpenses()
-    {
-        try
-        {
-            // Retrieve connection string from appsettings.json
-            var connectionString = _configuration.GetConnectionString("DefaultConnection");
+    // TODO: pretty sure this is a duplicate and can be removed
+    // [HttpGet("GetExpenses")]
+    // public async Task<IActionResult> GetExpenses()
+    // {
+    //     try
+    //     {
+    //         // Retrieve connection string from appsettings.json
+    //         var connectionString = _configuration.GetConnectionString("DefaultConnection");
 
-            // Check if connectionString is not null before using it
-            if (connectionString == null)
-            {
-                // Log or handle the situation where the connection string is not found
-                return BadRequest("Connection string not found in appsettings.json");
-            }
+    //         // Check if connectionString is not null before using it
+    //         if (connectionString == null)
+    //         {
+    //             // Log or handle the situation where the connection string is not found
+    //             return BadRequest("Connection string not found in appsettings.json");
+    //         }
 
-            var dbHelper = new DBHelper(connectionString);
+    //         var dbHelper = new DBHelper(connectionString);
 
-            // Retrieve all data from the "expenses" table
-            var expenses = await dbHelper.QueryAsync<ExpenseModel>("SELECT * FROM expenses");
+    //         // Retrieve all data from the "expenses" table
+    //         var expenses = await dbHelper.QueryAsync<ExpenseModel>("SELECT * FROM expenses");
 
-            // Handle the retrieved data as needed
-            return Ok(expenses);
-        }
-        catch (Exception ex)
-        {
-            // Log the exception for debugging purposes
-            Console.WriteLine($"Error: {ex.Message}");
+    //         // Handle the retrieved data as needed
+    //         return Ok(expenses);
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         // Log the exception for debugging purposes
+    //         Console.WriteLine($"Error: {ex.Message}");
 
-            // You might want to provide a more user-friendly error message in a production environment
-            return BadRequest("Failed to retrieve data from the 'expenses' table");
-        }
-    }
+    //         // You might want to provide a more user-friendly error message in a production environment
+    //         return BadRequest("Failed to retrieve data from the 'expenses' table");
+    //     }
+    // }
 }

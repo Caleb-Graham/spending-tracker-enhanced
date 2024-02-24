@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { HttpClientModule } from '@angular/common/http';
-import { BudgetComponent } from './components/budget/budget.component';
+import { SpendingComponent } from './components/spending/spending.component';
 import { SummaryComponent } from './components/summary/summary.component';
 import { NetWorthComponent } from './components/net-worth/net-worth.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -21,7 +21,7 @@ import { CategoriesComponent } from './components/categories/categories.componen
 @NgModule({
   declarations: [
     AppComponent,
-    BudgetComponent,
+    SpendingComponent,
     SummaryComponent,
     NetWorthComponent,
     HomeComponent,

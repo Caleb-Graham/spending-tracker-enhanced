@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { CSVService } from '../../services/csv.service';
 
 @Component({
-  selector: 'app-budget',
-  templateUrl: './budget.component.html',
-  styleUrl: './budget.component.scss',
+  selector: 'app-spending',
+  templateUrl: './spending.component.html',
+  styleUrl: './spending.component.scss',
 })
-export class BudgetComponent {
+export class SpendingComponent {
   constructor(private csvService: CSVService) {}
 
   onFileSelected($event: any) {
