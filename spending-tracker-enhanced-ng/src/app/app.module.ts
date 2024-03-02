@@ -18,6 +18,8 @@ import { HomeComponent } from './components/home/home.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatMenuModule } from '@angular/material/menu';
+import { MenuDropdownComponent } from './components/menu-dropdown/menu-dropdown.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     HomeComponent,
     ToolbarComponent,
     CategoriesComponent,
+    MenuDropdownComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +42,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatIconModule,
     MatToolbarModule,
     MatTabsModule,
+    MatMenuModule,
   ],
   providers: [provideClientHydration()],
   bootstrap: [AppComponent],
