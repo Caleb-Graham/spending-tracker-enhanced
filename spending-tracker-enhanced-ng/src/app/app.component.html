@@ -1,2 +1,8 @@
-<app-toolbar></app-toolbar>
-<router-outlet></router-outlet>
+<div class="home-container">
+  <div>
+    <app-popout-menu (minify)="getMenuState($event)"></app-popout-menu>
+  </div>
+  <content [ngStyle]="{ 'margin-left.px': isMiniMenu ? 100 : 350 }">
+    <router-outlet></router-outlet>
+  </content>
+</div>

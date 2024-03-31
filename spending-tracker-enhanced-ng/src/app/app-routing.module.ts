@@ -8,7 +8,7 @@ import { CategoriesComponent } from './components/categories/categories.componen
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'spending', component: SpendingComponent },
+  { path: 'my-spending', component: SpendingComponent },
   { path: 'categories', component: CategoriesComponent },
   { path: 'summary', component: SummaryComponent },
   { path: 'net-worth', component: NetWorthComponent },

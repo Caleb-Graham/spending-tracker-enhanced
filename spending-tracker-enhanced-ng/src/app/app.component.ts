@@ -7,5 +7,10 @@ import { CSVService } from './services/csv.service';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
+  isMiniMenu: boolean = false;
   constructor() {}
+
+  getMenuState($event: any) {
+    this.isMiniMenu = $event;
+  }
 }

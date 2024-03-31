@@ -1,0 +1,79 @@
+.nav-button {
+    text-align: start;
+  }
+  
+  .button-container {
+    margin-top: 6px;
+  }
+  
+  .selected {
+    font-weight: 800;
+  }
+  
+  .new-status {
+    height: 24px;
+    width: 24px;
+    border-radius: 12px;
+    background-color: darkgray;
+  }
+  
+  div.inflow {
+    position: fixed; /* Fixed positioning to make it reach the top and bottom of the page */
+    top: 0; /* Position it at the top */
+    bottom: 0; /* Position it at the bottom */
+    left: 0; /* Position it at the left */
+    // width: 250px; /* Set your desired width */
+    background-color: #999; /* Background color */
+    border-radius: 0 10px 10px 0; /* Round only the top-right and bottom-right corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Optional: Add a box shadow for a more pronounced effect */
+    z-index: 1000; /* Set a higher z-index to ensure it appears above other content */
+  }
+  
+  div.inflow-mini-menu {
+    width: 72px;
+  }
+  
+  div.inflow-full-width {
+    width: 100%;
+  }
+  
+  div.positioner {
+    position: absolute;
+    right: 0;
+  }
+  
+  div.floating-button {
+    background-color: #eee;
+    border: #999 1.5px solid;
+    border-radius: 17px;
+    height: 30px;
+    width: 30px;
+    position: fixed;
+    bottom: 2rem;
+    margin-left: -18px;
+    z-index: 100;
+  }
+  
+  div.right-anchored-button {
+    background-color: #eee;
+    border: #999 1.5px solid;
+    border-bottom-left-radius: 17px;
+    border-top-left-radius: 17px;
+    height: 30px;
+    width: 30px;
+    position: fixed;
+    bottom: 2rem;
+    right: -1px;
+    z-index: 100;
+  }
+  
+  .tabs-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tab {
+    margin: 0px;
+    margin-top: 1.5rem;
+  }

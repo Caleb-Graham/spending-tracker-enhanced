@@ -1,0 +1,40 @@
+<div
+  class="inflow"
+  [ngClass]="getClass()"
+  style="width: 400px"
+  [@minify]="minifyTheMenu"
+>
+  <div style="overflow-x: hidden" *ngIf="!!isMiniMenu">
+    <!-- <p>stuff here</p> -->
+  </div>
+
+  @if (!isMiniMenu) {
+  <div class="tabs-container">
+    @for (tab of tabs; track $index) {
+    <h1 class="tab clickable" [routerLink]="tab.tabRoute">{{ tab.tabName }}</h1>
+    }
+  </div>
+  }
+  <div class="positioner">
+    <div
+      class="floating-button"
+      [@slideButton]="minifyTheMenu"
+      *ngIf="!isPhoneSize || isMiniMenu"
+      (click)="toggleMenu()"
+      [title]="isMiniMenu ? 'Open Menu' : 'Close Menu'"
+    >
+      <mat-icon style="color: #666; margin: 2px">chevron_left</mat-icon>
+    </div>
+
+    <!-- ! Used for mobile I believe -->
+    <!-- <div
+        class="right-anchored-button"
+        [@slideButton]="minifyTheMenu"
+        *ngIf="isPhoneSize && !isMiniMenu"
+        (click)="toggleMenu()"
+        [title]="isMiniMenu ? 'Open Menu' : 'Close Menu'"
+      >
+        <mat-icon style="color: #666; margin: 2px">chevron_left</mat-icon>
+      </div> -->
+  </div>
+</div>

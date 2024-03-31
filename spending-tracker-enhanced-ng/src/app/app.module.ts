@@ -15,11 +15,10 @@ import { SummaryComponent } from './components/summary/summary.component';
 import { NetWorthComponent } from './components/net-worth/net-worth.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { HomeComponent } from './components/home/home.component';
-import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatMenuModule } from '@angular/material/menu';
-import { MenuDropdownComponent } from './components/menu-dropdown/menu-dropdown.component';
+import { PopoutMenuComponent } from './components/popout-menu/popout-menu.component';
 
 @NgModule({
   declarations: [
@@ -28,9 +27,8 @@ import { MenuDropdownComponent } from './components/menu-dropdown/menu-dropdown.
     SummaryComponent,
     NetWorthComponent,
     HomeComponent,
-    ToolbarComponent,
     CategoriesComponent,
-    MenuDropdownComponent,
+    PopoutMenuComponent,
   ],
   imports: [
     BrowserModule,
