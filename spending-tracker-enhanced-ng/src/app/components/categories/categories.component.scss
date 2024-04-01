@@ -1,18 +1,30 @@
 .categories-container {
     display: flex;
     flex-direction: row;
+    width: 100%;
+}
+
+mat-tab-group {
+    width: 100%;
 }
 
 .expenses {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    // align-items: center;
     width: 100%;
+    margin-top: 1.5rem;
 }
 
 .income {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    // align-items: center;
     width: 100%;
+    margin-top: 1.5rem;
 }
+
+.example-tree-node {
+    display: flex;
+    align-items: center;
+  }

@@ -19,6 +19,8 @@ import { CategoriesComponent } from './components/categories/categories.componen
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatMenuModule } from '@angular/material/menu';
 import { PopoutMenuComponent } from './components/popout-menu/popout-menu.component';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { NestedTreeControl, CdkTreeModule } from '@angular/cdk/tree';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { PopoutMenuComponent } from './components/popout-menu/popout-menu.compon
     HomeComponent,
     CategoriesComponent,
     PopoutMenuComponent,
+    ToolbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +44,7 @@ import { PopoutMenuComponent } from './components/popout-menu/popout-menu.compon
     MatToolbarModule,
     MatTabsModule,
     MatMenuModule,
+    CdkTreeModule,
   ],
   providers: [provideClientHydration()],
   bootstrap: [AppComponent],

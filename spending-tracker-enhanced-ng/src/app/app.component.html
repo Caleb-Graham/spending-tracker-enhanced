@@ -3,6 +3,7 @@
     <app-popout-menu (minify)="getMenuState($event)"></app-popout-menu>
   </div>
   <content [ngStyle]="{ 'margin-left.px': isMiniMenu ? 100 : 350 }">
+    <app-toolbar></app-toolbar>
     <router-outlet></router-outlet>
   </content>
 </div>
