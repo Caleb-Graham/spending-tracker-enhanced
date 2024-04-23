@@ -1,0 +1,17 @@
+.add-category {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.input {
+    display: flex;
+    justify-content: center;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: right;
+    margin-top: 1.5rem;
+}

@@ -6,6 +6,15 @@ import {
   Router,
 } from '@angular/router';
 import { filter } from 'rxjs';
+import {
+  MatDialog,
+  MatDialogRef,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogTitle,
+  MatDialogContent,
+} from '@angular/material/dialog';
+import { AddCategoryComponent } from '../categories/add-category/add-category.component';
 
 @Component({
   selector: 'app-toolbar',
@@ -15,7 +24,11 @@ import { filter } from 'rxjs';
 export class ToolbarComponent {
   currentComponent: string = '';
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.router.events
@@ -50,5 +63,11 @@ export class ToolbarComponent {
   transformComponentName(name: string): string {
     // Strip off leading underscore (_) and "Component"
     return name.replace(/^_(.*)Component$/, '$1').toLowerCase();
+  }
+
+  openAddCategoryDialog() {
+    this.dialog.open(AddCategoryComponent, {
+      width: '400px',
+    });
   }
 }

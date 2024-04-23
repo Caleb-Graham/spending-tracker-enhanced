@@ -1,7 +1,13 @@
 <div class="toolbar-container">
   @switch (currentComponent) { @case ('home') { } @case ('spending') { } @case
   ('categories') {
-  <mat-icon class="clickable">add</mat-icon>
+  <button
+    class="add-button clickable"
+    mat-icon-button
+    (click)="openAddCategoryDialog()"
+  >
+    <mat-icon>add</mat-icon>
+  </button>
   } @case ('summary') { } @case ('charts') { } @case ('networth') { } @case
   ('planning') { } @default { } }
 </div>

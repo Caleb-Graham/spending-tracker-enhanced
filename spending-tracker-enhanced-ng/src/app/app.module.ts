@@ -20,7 +20,10 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatMenuModule } from '@angular/material/menu';
 import { PopoutMenuComponent } from './components/popout-menu/popout-menu.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { NestedTreeControl, CdkTreeModule } from '@angular/cdk/tree';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { AddCategoryComponent } from './components/categories/add-category/add-category.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -32,6 +35,7 @@ import { NestedTreeControl, CdkTreeModule } from '@angular/cdk/tree';
     CategoriesComponent,
     PopoutMenuComponent,
     ToolbarComponent,
+    AddCategoryComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,7 +48,9 @@ import { NestedTreeControl, CdkTreeModule } from '@angular/cdk/tree';
     MatToolbarModule,
     MatTabsModule,
     MatMenuModule,
-    CdkTreeModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
   ],
   providers: [provideClientHydration()],
   bootstrap: [AppComponent],
