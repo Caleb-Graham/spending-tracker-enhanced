@@ -23,7 +23,8 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AddCategoryComponent } from './components/categories/add-category/add-category.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,8 @@ import { FormsModule } from '@angular/forms';
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
   ],
   providers: [provideClientHydration()],
   bootstrap: [AppComponent],
