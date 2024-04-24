@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { CSVService } from './services/csv.service';
+import { Store } from '@ngrx/store';
+import { SpendingState } from './state/app.state';
+import { SpendingActions } from './state/actions/spending.actions';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +10,12 @@ import { CSVService } from './services/csv.service';
 })
 export class AppComponent {
   isMiniMenu: boolean = false;
-  constructor() {}
+  constructor(private store: Store<SpendingState>) {}
+
+  ngOnInit() {
+    // * dispatch actions for inital spending app state
+    this.store.dispatch(SpendingActions.getCategories());
+  }
 
   getMenuState($event: any) {
     this.isMiniMenu = $event;

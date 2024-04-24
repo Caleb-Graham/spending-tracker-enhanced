@@ -25,6 +25,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { AddCategoryComponent } from './components/categories/add-category/add-category.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { Store, StoreModule } from '@ngrx/store';
+import { SpendingEffects } from './state/effects/spending.effects';
+import { spendingFeature } from './state/features/spending.features';
+import { EffectsModule } from '@ngrx/effects';
+import { SpendingActions } from './state/actions/spending.actions';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -39,6 +45,14 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     AddCategoryComponent,
   ],
   imports: [
+    EffectsModule.forRoot([SpendingEffects]),
+    StoreModule.forRoot({}),
+    StoreModule.forFeature(spendingFeature.name, spendingFeature.reducer),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: false, // Restrict extension to log-only mode - may need to add this to the consumer instead of the lib.
+    }),
+
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
