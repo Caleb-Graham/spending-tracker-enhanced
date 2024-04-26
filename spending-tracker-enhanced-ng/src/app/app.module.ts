@@ -25,11 +25,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { AddCategoryComponent } from './components/categories/add-category/add-category.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { Store, StoreModule } from '@ngrx/store';
+import { StoreModule } from '@ngrx/store';
 import { SpendingEffects } from './state/effects/spending.effects';
 import { spendingFeature } from './state/features/spending.features';
 import { EffectsModule } from '@ngrx/effects';
-import { SpendingActions } from './state/actions/spending.actions';
+import { MatSelectModule } from '@angular/material/select';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
@@ -68,6 +68,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     FormsModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
+    MatSelectModule,
   ],
   providers: [provideClientHydration()],
   bootstrap: [AppComponent],

@@ -2,7 +2,11 @@ import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Observable, startWith, map } from 'rxjs';
-import { Categories } from '../../../models/categories.model';
+import { Category } from '../../../models/categories.model';
+import { Store } from '@ngrx/store';
+import { CategoriesViewModel } from '../categories.viewmodel';
+import { selectCategoriesViewModel } from '../../../state/selectors/spending.selector';
+import { SpendingActions } from '../../../state/actions/spending.actions';
 
 @Component({
   selector: 'app-add-category',
@@ -11,37 +15,44 @@ import { Categories } from '../../../models/categories.model';
 })
 export class AddCategoryComponent {
   categoryName: string = '';
-  parentTypeControl = new FormControl<string | Categories>('');
-  options: Categories[] = [];
-  filteredOptions?: Observable<Categories[]>;
+  // parentTypeControl: FormControl<Categories> = new FormControl<Categories>();
+  selectedParent: any;
+  options: Category[] = [];
+  categoriesViewModel$: Observable<CategoriesViewModel> =
+    new Observable<CategoriesViewModel>();
 
-  constructor(private dialogRef: MatDialogRef<AddCategoryComponent>) {}
+  constructor(
+    private dialogRef: MatDialogRef<AddCategoryComponent>,
+    private store: Store
+  ) {}
 
   ngOnInit() {
-    this.filteredOptions = this.parentTypeControl.valueChanges.pipe(
-      startWith(''),
-      map((value) => {
-        const name = typeof value === 'string' ? value : value?.name;
-        return name ? this._filter(name as string) : this.options.slice();
-      })
-    );
+    this.categoriesViewModel$ = this.store.select(selectCategoriesViewModel);
   }
 
-  displayFn(category: Categories): string {
+  displayFn(category: Category): string {
     return category && category.name ? category.name : '';
   }
 
-  private _filter(name: string): Categories[] {
-    const filterValue = name.toLowerCase();
-
-    return this.options.filter((option) =>
-      option.name.toLowerCase().includes(filterValue)
+  onAddCategory(categoryType: 'Expense' | 'Income') {
+    console.log('categoryName', categoryType);
+    const category = {
+      name: this.categoryName,
+      type: categoryType,
+      parent_category_id: this.selectedParent
+        ? this.selectedParent.parent_Category_ID
+        : null,
+    };
+    this.store.dispatch(
+      SpendingActions.addCategory({
+        category,
+      })
     );
+
+    this.dialogRef.close();
   }
 
-  saveCategory() {}
-
-  cancel() {
+  onCancel() {
     this.dialogRef.close();
   }
 }

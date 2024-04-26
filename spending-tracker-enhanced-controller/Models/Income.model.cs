@@ -1,4 +1,4 @@
-public class IncomeModel
+public class Income
 {
     // public int Expense_ID { get; set; }
     // public int User_ID { get; set; }

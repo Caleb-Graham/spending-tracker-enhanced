@@ -9,7 +9,8 @@ export const spendingFeature = createFeature({
   reducer: spendingReducer,
 });
 
-export const { name, reducer, selectCategories } = spendingFeature;
+export const { name, reducer, selectCategories, selectActiveCategory } =
+  spendingFeature;
 
 // * feature selector
 export const selectSpendingFeature =

@@ -1,4 +1,4 @@
-export interface IncomeModel {
+export interface Income {
   //   expenseId: number;
   //   userId: number;
   //   categoryId: number;

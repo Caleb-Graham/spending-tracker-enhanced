@@ -31,7 +31,7 @@ public class IncomeController : ControllerBase
             var dbHelper = new DBHelper(connectionString);
 
             // Retrieve all data from the "income" table
-            var income = await dbHelper.QueryAsync<IncomeModel>(@"
+            var income = await dbHelper.QueryAsync<Income>(@"
                             SELECT
                                 categories.name AS category_name,
                                 SUM(income.amount) AS total_amount

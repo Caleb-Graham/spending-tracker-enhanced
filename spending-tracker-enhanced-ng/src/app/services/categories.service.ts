@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
-import { IncomeModel } from '../models/income.model';
-import { Categories } from '../models/categories.model';
+import { Income } from '../models/income.model';
+import { Category } from '../models/categories.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,12 +12,23 @@ export class CategoriesService {
 
   constructor(private http: HttpClient) {}
 
-  getCategories(): Observable<Categories[]> {
+  getCategories(): Observable<Category[]> {
     return this.http
-      .get<Categories[]>(`${this.apiUrl}/Categories/GetCategories`)
+      .get<Category[]>(`${this.apiUrl}/Category/GetCategories`)
       .pipe(
         catchError((error) => {
           console.error('Get all categories error:', error);
+          return throwError(() => new Error('Failed to get categories'));
+        })
+      );
+  }
+
+  addCategory(category: Category): Observable<boolean> {
+    return this.http
+      .post<boolean>(`${this.apiUrl}/Category/AddCategory`, category)
+      .pipe(
+        catchError((error) => {
+          console.error('Add category error:', error);
           return throwError(() => new Error('Failed to get categories'));
         })
       );

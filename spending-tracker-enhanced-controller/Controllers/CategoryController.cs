@@ -4,11 +4,11 @@ namespace spending_tracker_enhanced_controller.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class CategoriesController : ControllerBase
+public class CategoryController : ControllerBase
 {
     private readonly IConfiguration _configuration;
 
-    public CategoriesController(IConfiguration configuration)
+    public CategoryController(IConfiguration configuration)
     {
         _configuration = configuration;
     }
@@ -31,7 +31,7 @@ public class CategoriesController : ControllerBase
             var dbHelper = new DBHelper(connectionString);
 
             // Retrieve all data from the "income" table
-            var categories = await dbHelper.QueryAsync<CategoriesModel>(@"SELECT * FROM Categories ORDER BY name");
+            var categories = await dbHelper.QueryAsync<Category>(@"SELECT * FROM Categories ORDER BY name");
 
             // Handle the retrieved data as needed
             return Ok(categories);
@@ -46,7 +46,7 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpPost("AddCategory")]
-    public async Task<IActionResult> AddCategory(CategoriesModel category)
+    public async Task<IActionResult> AddCategory(Category category)
     {
         try
         {
@@ -67,14 +67,25 @@ public class CategoriesController : ControllerBase
 
             var dbHelper = new DBHelper(connectionString);
 
+            // Prepare parameters for the SQL query
             var parameters = new Dictionary<string, object>
-                    {
-                        { "@Name", category.Name },
-                        { "@Type", category.Type },
-                    };
+        {
+            { "@Name", category.Name },
+            { "@Type", category.Type }
+        };
+
+            // Add ParentID parameter if it's not null
+            if (category.Parent_Category_ID != null)
+            {
+                parameters.Add("@ParentID", category.Parent_Category_ID);
+            }
+            else
+            {
+                parameters.Add("@ParentID", DBNull.Value);
+            }
 
             // Insert the new category into the "Categories" table
-            var success = await dbHelper.ExecuteNonQueryAsync(@"INSERT INTO Categories (name, type) VALUES (@Name, @Type)", parameters);
+            var success = await dbHelper.ExecuteNonQueryAsync(@"INSERT INTO Categories (name, type, parent_category_id) VALUES (@Name, @Type, @ParentID)", parameters);
 
             return Ok(true);
         }
@@ -88,7 +99,7 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpPost("UpdateCategory")]
-    public async Task<IActionResult> UpdateCategory(CategoriesModel category)
+    public async Task<IActionResult> UpdateCategory(Category category)
     {
         try
         {

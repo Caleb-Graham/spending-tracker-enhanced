@@ -1,4 +1,4 @@
-public class CSVTransactionModel
+public class CSVTransaction
 {
     public DateTime Date { get; set; }
     public string Category { get; set; }

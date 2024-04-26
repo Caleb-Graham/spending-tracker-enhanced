@@ -1,4 +1,4 @@
-export interface ExpenseModel {
+export interface Expense {
   //   expenseId: number;
   //   userId: number;
   //   categoryId: number;

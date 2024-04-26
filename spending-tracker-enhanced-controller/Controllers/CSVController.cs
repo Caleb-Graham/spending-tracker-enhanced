@@ -45,7 +45,7 @@ public class CSVController : ControllerBase
                 Delimiter = "\t", // Set the delimiter to tab
             }))
             {
-                var records = csv.GetRecords<CSVTransactionModel>().ToList();
+                var records = csv.GetRecords<CSVTransaction>().ToList();
 
                 foreach (var record in records)
                 {
@@ -121,7 +121,7 @@ public class CSVController : ControllerBase
     //         var dbHelper = new DBHelper(connectionString);
 
     //         // Retrieve all data from the "expenses" table
-    //         var expenses = await dbHelper.QueryAsync<ExpenseModel>("SELECT * FROM expenses");
+    //         var expenses = await dbHelper.QueryAsync<Expense>("SELECT * FROM expenses");
 
     //         // Handle the retrieved data as needed
     //         return Ok(expenses);

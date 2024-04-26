@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ExpenseService } from '../../services/expense.service';
-import { ExpenseModel } from '../../models/expenses.model';
+import { Expense } from '../../models/expenses.model';
 import { IncomeService } from '../../services/income.service';
 import { ScaleType } from '@swimlane/ngx-charts';
 
@@ -10,8 +10,8 @@ import { ScaleType } from '@swimlane/ngx-charts';
   styleUrl: './summary.component.scss',
 })
 export class SummaryComponent implements OnInit {
-  expenses?: ExpenseModel[];
-  income?: ExpenseModel[];
+  expenses?: Expense[];
+  income?: Expense[];
   expensePieChartData: any[] = [];
   incomePieChartData: any[] = [];
   view: [number, number] = [900, 750];

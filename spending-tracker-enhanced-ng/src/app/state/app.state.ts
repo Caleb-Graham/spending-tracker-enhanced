@@ -1,5 +1,6 @@
-import { Categories } from '../models/categories.model';
+import { Category } from '../models/categories.model';
 
 export interface SpendingState {
-  categories: Categories[];
+  categories: Category[];
+  activeCategory: 'Expense' | 'Income';
 }

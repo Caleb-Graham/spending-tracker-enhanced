@@ -1,18 +1,20 @@
+@if (categoriesViewModel$ | async; as vm) {
 <div class="categories-container">
-  <mat-tab-group>
+  <mat-tab-group (selectedTabChange)="onTabChange($event)">
     <mat-tab label="Expenses">
       <div class="expenses">
-        <span *ngFor="let expenseCategory of expenseCategories">{{
+        <span *ngFor="let expenseCategory of vm.expenseCategories">{{
           expenseCategory.name
         }}</span>
       </div>
     </mat-tab>
     <mat-tab label="Income">
       <div class="income">
-        <span *ngFor="let incomeCategory of incomeCategories">{{
+        <span *ngFor="let incomeCategory of vm.incomeCategories">{{
           incomeCategory.name
         }}</span>
       </div>
     </mat-tab>
   </mat-tab-group>
 </div>
+}
