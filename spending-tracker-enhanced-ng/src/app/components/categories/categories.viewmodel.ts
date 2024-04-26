@@ -1,4 +1,4 @@
-import { Category } from '../../models/categories.model';
+import { Category } from '../../models/category.model';
 
 export interface CategoriesViewModel {
   expenseCategories: Category[];

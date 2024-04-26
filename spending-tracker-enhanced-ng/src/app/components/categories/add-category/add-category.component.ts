@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Observable, startWith, map } from 'rxjs';
-import { Category } from '../../../models/categories.model';
 import { Store } from '@ngrx/store';
 import { CategoriesViewModel } from '../categories.viewmodel';
 import { selectCategoriesViewModel } from '../../../state/selectors/spending.selector';
 import { SpendingActions } from '../../../state/actions/spending.actions';
+import { Category } from '../../../models/category.model';
 
 @Component({
   selector: 'app-add-category',
@@ -34,21 +34,22 @@ export class AddCategoryComponent {
     return category && category.name ? category.name : '';
   }
 
-  onAddCategory(categoryType: 'Expense' | 'Income') {
-    console.log('categoryName', categoryType);
-    const category = {
-      name: this.categoryName,
-      type: categoryType,
-      parent_category_id: this.selectedParent
-        ? this.selectedParent.parent_Category_ID
-        : null,
-    };
+  onAddCategory(
+    categoryType: 'Expense' | 'Income',
+    selectedParentID: number | undefined
+  ) {
+    console.log('selected p id', selectedParentID);
+    const category = new Category(
+      this.categoryName,
+      categoryType,
+      selectedParentID
+    );
+
     this.store.dispatch(
       SpendingActions.addCategory({
         category,
       })
     );
-
     this.dialogRef.close();
   }
 

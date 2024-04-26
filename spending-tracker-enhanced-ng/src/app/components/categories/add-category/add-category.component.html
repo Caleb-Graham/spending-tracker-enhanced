@@ -17,7 +17,6 @@
         <mat-option value="Income">Income</mat-option>
       </mat-select>
     </mat-form-field>
-    <h1>TEST: {{ vm.activeCategory }}</h1>
     <mat-form-field>
       <mat-label>Parent</mat-label>
       <input
@@ -28,7 +27,7 @@
       />
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
         @for (option of vm.activeCategory === 'Expense' ? vm.expenseCategories :
-        vm.incomeCategories; track option) {
+        vm.incomeCategories; track option.name) {
         <mat-option [value]="option">{{ option.name }}</mat-option>
         }
       </mat-autocomplete>
@@ -40,7 +39,12 @@
       mat-button
       color="primary"
       type="submit"
-      (click)="onAddCategory(vm.activeCategory)"
+      (click)="
+        onAddCategory(
+          vm.activeCategory,
+          selectedParent ? selectedParent.category_ID : undefined
+        )
+      "
     >
       Save
     </button>

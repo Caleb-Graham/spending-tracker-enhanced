@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { SpendingActions } from '../actions/spending.actions';
 import { of, switchMap } from 'rxjs';
 import { CategoriesService } from '../../services/categories.service';
-import { Category } from '../../models/categories.model';
+import { Category } from '../../models/category.model';
 
 @Injectable()
 export class SpendingEffects {

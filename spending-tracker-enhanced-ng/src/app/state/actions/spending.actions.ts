@@ -1,5 +1,5 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { Category } from '../../models/categories.model';
+import { Category } from '../../models/category.model';
 
 export const SpendingActions = createActionGroup({
   source: 'App',
