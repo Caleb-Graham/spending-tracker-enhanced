@@ -1,5 +1,10 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {
+  RouterModule,
+  Routes,
+  provideRouter,
+  withViewTransitions,
+} from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { SpendingComponent } from './components/spending/spending.component';
 import { NetWorthComponent } from './components/net-worth/net-worth.component';
@@ -17,5 +22,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
+  providers: [provideRouter(routes, withViewTransitions())],
 })
 export class AppRoutingModule {}

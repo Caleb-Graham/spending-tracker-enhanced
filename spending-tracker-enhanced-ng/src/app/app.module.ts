@@ -31,6 +31,7 @@ import { spendingFeature } from './state/features/spending.features';
 import { EffectsModule } from '@ngrx/effects';
 import { MatSelectModule } from '@angular/material/select';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { UpdateCategoryComponent } from './components/categories/update-category/update-category.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     PopoutMenuComponent,
     ToolbarComponent,
     AddCategoryComponent,
+    UpdateCategoryComponent,
   ],
   imports: [
     EffectsModule.forRoot([SpendingEffects]),

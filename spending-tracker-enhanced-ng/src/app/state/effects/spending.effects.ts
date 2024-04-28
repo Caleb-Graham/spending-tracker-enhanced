@@ -28,16 +28,47 @@ export class SpendingEffects {
     );
   });
 
-  saveCategory$ = createEffect(() => {
+  addCategory$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(SpendingActions.addCategory),
       switchMap((action) => {
-        console.log('add category effect');
         return this.categoriesService.addCategory(action.category).pipe(
           switchMap(() => {
             return of({
               type: SpendingActions.addCategorySuccess.type,
               category: action.category,
+            });
+          })
+        );
+      })
+    );
+  });
+
+  updateCategory$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(SpendingActions.updateCategory),
+      switchMap((action) => {
+        return this.categoriesService.updateCategory(action.category).pipe(
+          switchMap(() => {
+            return of({
+              type: SpendingActions.updateCategorySuccess.type,
+              category: action.category,
+            });
+          })
+        );
+      })
+    );
+  });
+
+  deleteCategory$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(SpendingActions.deleteCategory),
+      switchMap((action) => {
+        return this.categoriesService.deleteCategory(action.categoryName).pipe(
+          switchMap(() => {
+            return of({
+              type: SpendingActions.deleteCategorySuccess.type,
+              categoryName: action.categoryName,
             });
           })
         );

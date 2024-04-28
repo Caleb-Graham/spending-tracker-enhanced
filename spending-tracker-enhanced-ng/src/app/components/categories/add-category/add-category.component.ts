@@ -15,7 +15,6 @@ import { Category } from '../../../models/category.model';
 })
 export class AddCategoryComponent {
   categoryName: string = '';
-  // parentTypeControl: FormControl<Categories> = new FormControl<Categories>();
   selectedParent: any;
   options: Category[] = [];
   categoriesViewModel$: Observable<CategoriesViewModel> =
@@ -38,7 +37,6 @@ export class AddCategoryComponent {
     categoryType: 'Expense' | 'Income',
     selectedParentID: number | undefined
   ) {
-    console.log('selected p id', selectedParentID);
     const category = new Category(
       this.categoryName,
       categoryType,

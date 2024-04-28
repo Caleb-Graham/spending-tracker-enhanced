@@ -32,5 +32,35 @@ export const spendingReducer = createReducer(
       ...state,
       categories: [...state.categories, category],
     };
+  }),
+
+  // * updates category in state
+  on(SpendingActions.updateCategorySuccess, (state, { category }) => {
+    const updatedCategories = state.categories.map((existingCategory) => {
+      // Check if the category names match
+      if (existingCategory.name === category.oldCategoryName) {
+        // If the names match, update the category
+        return category;
+      }
+      // If the names don't match, return the existing category unchanged
+      return existingCategory;
+    });
+
+    return {
+      ...state,
+      categories: updatedCategories,
+    };
+  }),
+
+  // * deletes category from state
+  on(SpendingActions.deleteCategorySuccess, (state, { categoryName }) => {
+    const updatedCategories = state.categories.filter(
+      (existingCategory) => existingCategory.name !== categoryName
+    );
+
+    return {
+      ...state,
+      categories: updatedCategories,
+    };
   })
 );

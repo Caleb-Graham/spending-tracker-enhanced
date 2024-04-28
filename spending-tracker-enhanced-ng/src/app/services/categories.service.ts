@@ -16,7 +16,7 @@ export class CategoriesService {
       .get<Category[]>(`${this.apiUrl}/Category/GetCategories`)
       .pipe(
         catchError((error) => {
-          console.error('Get all categories error:', error);
+          console.error('Add category error:', error);
           return throwError(() => new Error('Failed to get categories'));
         })
       );
@@ -28,7 +28,29 @@ export class CategoriesService {
       .pipe(
         catchError((error) => {
           console.error('Add category error:', error);
-          return throwError(() => new Error('Failed to get categories'));
+          return throwError(() => new Error('Failed to add categories'));
+        })
+      );
+  }
+
+  updateCategory(category: Category): Observable<boolean> {
+    return this.http
+      .post<boolean>(`${this.apiUrl}/Category/UpdateCategory`, category)
+      .pipe(
+        catchError((error) => {
+          console.error('Update category error:', error);
+          return throwError(() => new Error('Failed to update categories'));
+        })
+      );
+  }
+
+  deleteCategory(categoryName: string): Observable<boolean> {
+    return this.http
+      .delete<boolean>(`${this.apiUrl}/Category/DeleteCategory/${categoryName}`)
+      .pipe(
+        catchError((error) => {
+          console.error('Delete category error:', error);
+          return throwError(() => new Error('Failed to delete categories'));
         })
       );
   }

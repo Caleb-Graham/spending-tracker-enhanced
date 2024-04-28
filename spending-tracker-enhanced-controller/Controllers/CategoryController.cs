@@ -99,12 +99,12 @@ public class CategoryController : ControllerBase
     }
 
     [HttpPost("UpdateCategory")]
-    public async Task<IActionResult> UpdateCategory(Category category)
+    public async Task<IActionResult> UpdateCategory(CategoryRequest category)
     {
         try
         {
             // Check if the received category is valid
-            if (category == null || category.Category_ID <= 0)
+            if (category == null)
             {
                 return BadRequest("Invalid category data");
             }
@@ -122,13 +122,26 @@ public class CategoryController : ControllerBase
 
             var parameters = new Dictionary<string, object>
                 {
-                    { "@Id", category.Category_ID },
                     { "@Name", category.Name },
+                    { "@OldName", category.OldCategoryName },
                     { "@Type", category.Type },
                 };
 
+            // Add ParentID parameter if it's not null
+            if (category.Parent_Category_ID != null)
+            {
+                parameters.Add("@ParentID", category.Parent_Category_ID);
+            }
+            else
+            {
+                parameters.Add("@ParentID", DBNull.Value);
+            }
+
             // Update the existing category in the "Categories" table
-            var success = await dbHelper.ExecuteNonQueryAsync(@"UPDATE Categories SET name = @Name, type = @Type WHERE Id = @Id", parameters);
+            var success = await dbHelper.ExecuteNonQueryAsync(@"
+            UPDATE Categories 
+            SET name = @Name, type = @Type, parent_category_id = @ParentID 
+            WHERE name = @OldName", parameters);
 
             return Ok(true);
         }
@@ -141,8 +154,8 @@ public class CategoryController : ControllerBase
         }
     }
 
-    [HttpDelete("DeleteCategory/{categoryId}")]
-    public async Task<IActionResult> DeleteCategory(int categoryId)
+    [HttpDelete("DeleteCategory/{categoryName}")]
+    public async Task<IActionResult> DeleteCategory(string categoryName)
     {
         try
         {
@@ -159,11 +172,13 @@ public class CategoryController : ControllerBase
 
             var parameters = new Dictionary<string, object>
                     {
-                        { "@CategoryId", categoryId },
+                        { "@CategoryName", categoryName },
                     };
 
-            // Delete the category from the "Categories" table based on the categoryId
-            var success = await dbHelper.ExecuteNonQueryAsync(@"DELETE FROM Categories WHERE Id = @CategoryId", parameters);
+            // Delete the category from the "Categories" table based on the CategoryName
+            var success = await dbHelper.ExecuteNonQueryAsync(@"
+            DELETE FROM Categories 
+            WHERE name = @CategoryName", parameters);
 
             return Ok(true);
         }

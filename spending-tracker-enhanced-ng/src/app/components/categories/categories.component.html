@@ -3,16 +3,22 @@
   <mat-tab-group (selectedTabChange)="onTabChange($event)">
     <mat-tab label="Expenses">
       <div class="expenses">
-        <span *ngFor="let expenseCategory of vm.expenseCategories">{{
-          expenseCategory.name
-        }}</span>
+        <span
+          class="category"
+          *ngFor="let expenseCategory of vm.expenseCategories"
+          (click)="openUpdateCategoryDialog(expenseCategory)"
+          >{{ expenseCategory.name }}</span
+        >
       </div>
     </mat-tab>
     <mat-tab label="Income">
       <div class="income">
-        <span *ngFor="let incomeCategory of vm.incomeCategories">{{
-          incomeCategory.name
-        }}</span>
+        <span
+          class="category"
+          *ngFor="let incomeCategory of vm.incomeCategories"
+          (click)="openUpdateCategoryDialog(incomeCategory)"
+          >{{ incomeCategory.name }}</span
+        >
       </div>
     </mat-tab>
   </mat-tab-group>
