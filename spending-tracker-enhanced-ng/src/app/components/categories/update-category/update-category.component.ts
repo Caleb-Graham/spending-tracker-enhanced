@@ -17,8 +17,6 @@ import { FormControl } from '@angular/forms';
 })
 export class UpdateCategoryComponent {
   categoryName: string = '';
-  // selectedParent?: any;
-  // selectedParentCategoryName?: string;
   selectedParentControl: FormControl;
   isParentCategory: boolean = false;
   options: Category[] = [];
@@ -30,7 +28,6 @@ export class UpdateCategoryComponent {
     private store: Store,
     @Inject(MAT_DIALOG_DATA) public category: Category
   ) {
-    console.log('selectedParent', this.category);
     this.selectedParentControl = new FormControl();
     if (this.category.parent_Category_Name) {
       this.selectedParentControl.setValue(this.category.parent_Category_Name);

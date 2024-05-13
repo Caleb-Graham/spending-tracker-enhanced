@@ -25,6 +25,7 @@
         [matAutocomplete]="auto"
         [formControl]="selectedParentControl"
       />
+      <!-- TODO: Implement auto sorting -->
       <mat-autocomplete #auto="matAutocomplete">
         @for (option of vm.activeCategory === 'Expense' ? vm.expenseCategories :
         vm.incomeCategories; track option.name) {

@@ -33,7 +33,6 @@ export class AddCategoryComponent {
     categoryType: 'Expense' | 'Income',
     selectedParent: string | undefined
   ) {
-    console.log('selectedParent', selectedParent);
     const category = new Category(
       this.categoryName,
       categoryType,
