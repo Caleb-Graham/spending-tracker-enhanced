@@ -32,6 +32,7 @@ export class CategoriesComponent {
   }
 
   openUpdateCategoryDialog(category: Category) {
+    console.log('category', category);
     this.dialog.open(UpdateCategoryComponent, {
       width: '400px',
       data: category,

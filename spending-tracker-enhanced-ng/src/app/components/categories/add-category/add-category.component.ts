@@ -15,7 +15,7 @@ import { Category } from '../../../models/category.model';
 })
 export class AddCategoryComponent {
   categoryName: string = '';
-  selectedParent: any;
+  selectedParent?: string;
   options: Category[] = [];
   categoriesViewModel$: Observable<CategoriesViewModel> =
     new Observable<CategoriesViewModel>();
@@ -29,18 +29,15 @@ export class AddCategoryComponent {
     this.categoriesViewModel$ = this.store.select(selectCategoriesViewModel);
   }
 
-  displayFn(category: Category): string {
-    return category && category.name ? category.name : '';
-  }
-
   onAddCategory(
     categoryType: 'Expense' | 'Income',
-    selectedParentID: number | undefined
+    selectedParent: string | undefined
   ) {
+    console.log('selectedParent', selectedParent);
     const category = new Category(
       this.categoryName,
       categoryType,
-      selectedParentID
+      selectedParent
     );
 
     this.store.dispatch(

@@ -8,6 +8,7 @@ import { selectCategoriesViewModel } from '../../../state/selectors/spending.sel
 import { AddCategoryComponent } from '../add-category/add-category.component';
 import { CategoriesViewModel } from '../categories.viewmodel';
 import { CategoryRequest } from '../../../models/category-request.model';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-update-category',
@@ -16,7 +17,10 @@ import { CategoryRequest } from '../../../models/category-request.model';
 })
 export class UpdateCategoryComponent {
   categoryName: string = '';
-  selectedParent: any;
+  // selectedParent?: any;
+  // selectedParentCategoryName?: string;
+  selectedParentControl: FormControl;
+  isParentCategory: boolean = false;
   options: Category[] = [];
   categoriesViewModel$: Observable<CategoriesViewModel> =
     new Observable<CategoriesViewModel>();
@@ -25,15 +29,17 @@ export class UpdateCategoryComponent {
     private dialogRef: MatDialogRef<AddCategoryComponent>,
     private store: Store,
     @Inject(MAT_DIALOG_DATA) public category: Category
-  ) {}
+  ) {
+    console.log('selectedParent', this.category);
+    this.selectedParentControl = new FormControl();
+    if (this.category.parent_Category_Name) {
+      this.selectedParentControl.setValue(this.category.parent_Category_Name);
+    }
+  }
 
   ngOnInit() {
     this.categoriesViewModel$ = this.store.select(selectCategoriesViewModel);
     this.categoryName = this.category.name;
-  }
-
-  displayFn(category: Category): string {
-    return category && category.name ? category.name : '';
   }
 
   onDeleteCategory() {
@@ -45,17 +51,16 @@ export class UpdateCategoryComponent {
     this.dialogRef.close();
   }
 
-  getSelectedOption($event: any) {}
+  getSelectedOption($event: any) {
+    console.log('when does this fire?');
+  }
 
-  onUpdateCategory(
-    categoryType: 'Expense' | 'Income',
-    selectedParentID: number | undefined
-  ) {
+  onUpdateCategory(categoryType: 'Expense' | 'Income') {
     const category = new CategoryRequest(
       this.categoryName,
       this.category.name,
       categoryType,
-      selectedParentID
+      this.selectedParentControl.value
     );
 
     this.store.dispatch(

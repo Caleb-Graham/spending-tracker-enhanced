@@ -31,7 +31,17 @@ public class CategoryController : ControllerBase
             var dbHelper = new DBHelper(connectionString);
 
             // Retrieve all data from the "income" table
-            var categories = await dbHelper.QueryAsync<Category>(@"SELECT * FROM Categories ORDER BY name");
+            var categories = await dbHelper.QueryAsync<Category>(@"
+            SELECT 
+                c.*, 
+                parent.name AS parent_category_name
+            FROM 
+                Categories c
+            LEFT JOIN 
+                Categories parent ON c.parent_category_id = parent.category_id
+            ORDER BY 
+                c.name
+            ");
 
             // Handle the retrieved data as needed
             return Ok(categories);
@@ -74,18 +84,20 @@ public class CategoryController : ControllerBase
             { "@Type", category.Type }
         };
 
-            // Add ParentID parameter if it's not null
-            if (category.Parent_Category_ID != null)
+            // Add ParentName parameter if it's not null
+            if (category.Parent_Category_Name != null)
             {
-                parameters.Add("@ParentID", category.Parent_Category_ID);
+                parameters.Add("@ParentName", category.Parent_Category_Name);
             }
             else
             {
-                parameters.Add("@ParentID", DBNull.Value);
+                parameters.Add("@ParentName", DBNull.Value);
             }
 
             // Insert the new category into the "Categories" table
-            var success = await dbHelper.ExecuteNonQueryAsync(@"INSERT INTO Categories (name, type, parent_category_id) VALUES (@Name, @Type, @ParentID)", parameters);
+            var success = await dbHelper.ExecuteNonQueryAsync(@"INSERT INTO 
+            Categories (name, type, parent_category_id) 
+            VALUES (@Name, @Type, (SELECT category_id FROM categories WHERE name = @ParentName))", parameters);
 
             return Ok(true);
         }
@@ -127,20 +139,20 @@ public class CategoryController : ControllerBase
                     { "@Type", category.Type },
                 };
 
-            // Add ParentID parameter if it's not null
-            if (category.Parent_Category_ID != null)
+            // Add ParentName parameter if it's not null
+            if (category.Parent_Category_Name != null)
             {
-                parameters.Add("@ParentID", category.Parent_Category_ID);
+                parameters.Add("@ParentName", category.Parent_Category_Name);
             }
             else
             {
-                parameters.Add("@ParentID", DBNull.Value);
+                parameters.Add("@ParentName", DBNull.Value);
             }
 
             // Update the existing category in the "Categories" table
             var success = await dbHelper.ExecuteNonQueryAsync(@"
             UPDATE Categories 
-            SET name = @Name, type = @Type, parent_category_id = @ParentID 
+            SET name = @Name, type = @Type, parent_category_id = (SELECT category_id FROM categories WHERE name = @ParentName)
             WHERE name = @OldName", parameters);
 
             return Ok(true);
@@ -177,8 +189,8 @@ public class CategoryController : ControllerBase
 
             // Delete the category from the "Categories" table based on the CategoryName
             var success = await dbHelper.ExecuteNonQueryAsync(@"
-            DELETE FROM Categories 
-            WHERE name = @CategoryName", parameters);
+                DELETE FROM Categories 
+                WHERE name = @CategoryName", parameters);
 
             return Ok(true);
         }

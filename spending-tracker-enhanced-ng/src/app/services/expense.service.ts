@@ -12,7 +12,7 @@ export class ExpenseService {
   constructor(private http: HttpClient) {}
 
   getExpenses(): Observable<Expense[]> {
-    return this.http.get<Expense[]>(`${this.apiUrl}/Expense/GetExpenses`).pipe(
+    return this.http.get<Expense[]>(`${this.apiUrl}/Expenses/GetExpenses`).pipe(
       catchError((error) => {
         console.error('Get all expenses error:', error);
         return throwError(() => new Error('Failed to get expenses'));

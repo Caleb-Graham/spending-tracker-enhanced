@@ -25,10 +25,10 @@
         [matAutocomplete]="auto"
         [(ngModel)]="selectedParent"
       />
-      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+      <mat-autocomplete #auto="matAutocomplete">
         @for (option of vm.activeCategory === 'Expense' ? vm.expenseCategories :
         vm.incomeCategories; track option.name) {
-        <mat-option [value]="option">{{ option.name }}</mat-option>
+        <mat-option [value]="option.name">{{ option.name }}</mat-option>
         }
       </mat-autocomplete>
     </mat-form-field>
@@ -39,12 +39,7 @@
       mat-button
       color="primary"
       type="submit"
-      (click)="
-        onAddCategory(
-          vm.activeCategory,
-          selectedParent ? selectedParent.category_ID : undefined
-        )
-      "
+      (click)="onAddCategory(vm.activeCategory, selectedParent)"
     >
       Save
     </button>
