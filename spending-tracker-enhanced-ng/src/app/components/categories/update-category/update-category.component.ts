@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest, map, startWith } from 'rxjs';
 import { Category } from '../../../models/category.model';
 import { SpendingActions } from '../../../state/actions/spending.actions';
 import { selectCategoriesViewModel } from '../../../state/selectors/spending.selector';
@@ -22,6 +22,7 @@ export class UpdateCategoryComponent {
   options: Category[] = [];
   categoriesViewModel$: Observable<CategoriesViewModel> =
     new Observable<CategoriesViewModel>();
+  filteredOptions?: Observable<string[]>;
 
   constructor(
     private dialogRef: MatDialogRef<AddCategoryComponent>,
@@ -36,7 +37,24 @@ export class UpdateCategoryComponent {
 
   ngOnInit() {
     this.categoriesViewModel$ = this.store.select(selectCategoriesViewModel);
+
+    this.filteredOptions = combineLatest([
+      this.selectedParentControl.valueChanges.pipe(startWith('')),
+      this.categoriesViewModel$,
+    ]).pipe(map(([value, vm]) => this.filterOptions(value, vm)));
+
     this.categoryName = this.category.name;
+  }
+
+  private filterOptions(value: string, vm: CategoriesViewModel): string[] {
+    const filterValue = value.toLowerCase();
+    const options =
+      vm.activeCategory === 'Expense'
+        ? vm.expenseCategories
+        : vm.incomeCategories;
+    return options
+      .map((option) => option.name)
+      .filter((option) => option.toLowerCase().includes(filterValue));
   }
 
   onDeleteCategory() {

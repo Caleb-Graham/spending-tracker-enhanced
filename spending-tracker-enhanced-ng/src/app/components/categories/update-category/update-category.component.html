@@ -25,16 +25,14 @@
         [matAutocomplete]="auto"
         [formControl]="selectedParentControl"
       />
-      <!-- TODO: Implement auto sorting -->
       <mat-autocomplete #auto="matAutocomplete">
-        @for (option of vm.activeCategory === 'Expense' ? vm.expenseCategories :
-        vm.incomeCategories; track option.name) {
         <mat-option
+          *ngFor="let option of filteredOptions | async"
           (onSelectionChange)="getSelectedOption($event)"
-          [value]="option.name"
-          >{{ option.name }}</mat-option
+          [value]="option"
         >
-        }
+          {{ option }}
+        </mat-option>
       </mat-autocomplete>
     </mat-form-field>
   </div>
