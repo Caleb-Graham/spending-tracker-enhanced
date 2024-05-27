@@ -75,6 +75,7 @@ export class UpdateCategoryComponent {
       this.categoryName,
       this.category.name,
       categoryType,
+      this.category.type,
       this.selectedParentControl.value
     );
 

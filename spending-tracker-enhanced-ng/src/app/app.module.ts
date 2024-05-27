@@ -32,6 +32,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { MatSelectModule } from '@angular/material/select';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { UpdateCategoryComponent } from './components/categories/update-category/update-category.component';
+import { MatTreeModule } from '@angular/material/tree';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { UpdateCategoryComponent } from './components/categories/update-category
     MatAutocompleteModule,
     ReactiveFormsModule,
     MatSelectModule,
+    MatTreeModule,
   ],
   providers: [provideClientHydration()],
   bootstrap: [AppComponent],

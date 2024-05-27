@@ -137,6 +137,7 @@ public class CategoryController : ControllerBase
                     { "@Name", category.Name },
                     { "@OldName", category.OldCategoryName },
                     { "@Type", category.Type },
+                    { "@OldCategoryType", category.OldCategoryType },
                 };
 
             // Add ParentName parameter if it's not null
@@ -153,7 +154,7 @@ public class CategoryController : ControllerBase
             var success = await dbHelper.ExecuteNonQueryAsync(@"
             UPDATE Categories 
             SET name = @Name, type = @Type, parent_category_id = (SELECT category_id FROM categories WHERE name = @ParentName)
-            WHERE name = @OldName", parameters);
+            WHERE name = @OldName AND type = @OldCategoryType", parameters);
 
             return Ok(true);
         }
