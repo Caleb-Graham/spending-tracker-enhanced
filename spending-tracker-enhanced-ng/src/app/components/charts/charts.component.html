@@ -1,8 +1,9 @@
+@if (chartsViewModel$ | async; as vm) {
 <div class="summary-container">
   <ngx-charts-pie-chart
     [view]="view"
     [scheme]="colorScheme"
-    [results]="expensePieChartData"
+    [results]="vm.expensePieChart"
     [gradient]="gradient"
     [legend]="showLegend"
     [legendPosition]="legendPosition"
@@ -16,7 +17,7 @@
   <ngx-charts-pie-chart
     [view]="view"
     [scheme]="colorScheme"
-    [results]="incomePieChartData"
+    [results]="vm.incomePieChart"
     [gradient]="gradient"
     [legend]="showLegend"
     [legendPosition]="legendPosition"
@@ -27,7 +28,8 @@
     (deactivate)="onDeactivate($event)"
   >
   </ngx-charts-pie-chart>
-  <span style="margin-top: 100px">
+
+  <!-- <span style="margin-top: 100px">
     <ngx-charts-sankey
       [view]="view"
       [results]="sankeyData"
@@ -42,5 +44,6 @@
       (deactivate)="onDeactivate($event)"
     >
     </ngx-charts-sankey>
-  </span>
+  </span> -->
 </div>
+}

@@ -4,11 +4,29 @@ import { SpendingActions } from '../actions/spending.actions';
 
 export const initalState: SpendingState = {
   categories: [],
+  expenses: [],
+  income: [],
   activeCategory: 'Expense',
 };
 
 export const spendingReducer = createReducer(
   initalState,
+
+  // * sets expenses state
+  on(SpendingActions.getExpensesSuccess, (state, { expenses }) => {
+    return {
+      ...state,
+      expenses: expenses,
+    };
+  }),
+
+  // * sets income state
+  on(SpendingActions.getIncomeSuccess, (state, { income }) => {
+    return {
+      ...state,
+      income: income,
+    };
+  }),
 
   // * sets category state
   on(SpendingActions.getCategoriesSuccess, (state, { categories }) => {

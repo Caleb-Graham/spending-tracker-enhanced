@@ -4,12 +4,18 @@ import { SpendingActions } from '../actions/spending.actions';
 import { of, switchMap } from 'rxjs';
 import { CategoriesService } from '../../services/categories.service';
 import { Category } from '../../models/category.model';
+import { ExpenseService } from '../../services/expense.service';
+import { Expense } from '../../models/expenses.model';
+import { IncomeService } from '../../services/income.service';
+import { Income } from '../../models/income.model';
 
 @Injectable()
 export class SpendingEffects {
   constructor(
     private actions$: Actions,
-    private categoriesService: CategoriesService
+    private categoriesService: CategoriesService,
+    private expensesService: ExpenseService,
+    private incomeService: IncomeService
   ) {}
 
   getCategories$ = createEffect(() => {
@@ -21,6 +27,38 @@ export class SpendingEffects {
             return of({
               type: SpendingActions.getCategoriesSuccess.type,
               categories: categories,
+            });
+          })
+        );
+      })
+    );
+  });
+
+  getExpenses$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(SpendingActions.getExpenses),
+      switchMap(() => {
+        return this.expensesService.getExpenses().pipe(
+          switchMap((expenses: Expense[]) => {
+            return of({
+              type: SpendingActions.getExpensesSuccess.type,
+              expenses: expenses,
+            });
+          })
+        );
+      })
+    );
+  });
+
+  getIncome$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(SpendingActions.getIncome),
+      switchMap(() => {
+        return this.incomeService.getIncome().pipe(
+          switchMap((income: Income[]) => {
+            return of({
+              type: SpendingActions.getIncomeSuccess.type,
+              income: income,
             });
           })
         );

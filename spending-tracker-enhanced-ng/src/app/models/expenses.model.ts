@@ -4,7 +4,7 @@ export interface Expense {
   //   categoryId: number;
   total_Amount: number;
   //   description: string;
-  //   date: Date;
+  // date: Date;
   category_Name: string;
   //   category_Type: string;
 }
