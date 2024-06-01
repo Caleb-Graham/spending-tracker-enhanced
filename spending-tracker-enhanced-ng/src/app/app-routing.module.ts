@@ -10,6 +10,7 @@ import { SpendingComponent } from './components/spending/spending.component';
 import { NetWorthComponent } from './components/net-worth/net-worth.component';
 import { SummaryComponent } from './components/summary/summary.component';
 import { CategoriesComponent } from './components/categories/categories.component';
+import { ChartsComponent } from './components/charts/charts.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'categories', component: CategoriesComponent },
   { path: 'summary', component: SummaryComponent },
   { path: 'net-worth', component: NetWorthComponent },
+  { path: 'charts', component: ChartsComponent },
 ];
 
 @NgModule({

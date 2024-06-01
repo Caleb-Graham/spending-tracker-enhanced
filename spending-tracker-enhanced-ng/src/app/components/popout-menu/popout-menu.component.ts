@@ -6,10 +6,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, EventEmitter, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Observable, Subject, takeUntil } from 'rxjs';
 import { MenuService } from '../../services/menu.service';
-import { MenuStatus } from '../../enums/menu-status.enum';
 import { Tab } from '../../models/subtab.model';
 
 @Component({

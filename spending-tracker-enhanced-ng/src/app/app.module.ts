@@ -33,6 +33,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { UpdateCategoryComponent } from './components/categories/update-category/update-category.component';
 import { MatTreeModule } from '@angular/material/tree';
+import { ChartsComponent } from './components/charts/charts.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { MatTreeModule } from '@angular/material/tree';
     ToolbarComponent,
     AddCategoryComponent,
     UpdateCategoryComponent,
+    ChartsComponent,
   ],
   imports: [
     EffectsModule.forRoot([SpendingEffects]),
