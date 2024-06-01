@@ -6,6 +6,13 @@
     margin-right: 1.5rem;
 }
 
+.charts-container {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+}
+
 .grey-line {
     border: none;
     background-color: grey;

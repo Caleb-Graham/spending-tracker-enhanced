@@ -37,15 +37,17 @@ export class SpendingEffects {
   getExpenses$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(SpendingActions.getExpenses),
-      switchMap(() => {
-        return this.expensesService.getExpenses().pipe(
-          switchMap((expenses: Expense[]) => {
-            return of({
-              type: SpendingActions.getExpensesSuccess.type,
-              expenses: expenses,
-            });
-          })
-        );
+      switchMap((action) => {
+        return this.expensesService
+          .getExpenses(action.startDate, action.endDate)
+          .pipe(
+            switchMap((expenses: Expense[]) => {
+              return of({
+                type: SpendingActions.getExpensesSuccess.type,
+                expenses: expenses,
+              });
+            })
+          );
       })
     );
   });

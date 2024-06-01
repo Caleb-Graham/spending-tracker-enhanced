@@ -50,17 +50,18 @@ public class CSVController : ControllerBase
                 foreach (var record in records)
                 {
                     var recordType = csvHelper.GetType(record.Amount);
+                    var recordCategory = record.Category.Trim();
 
                     await dbHelper.ExecuteNonQueryAsync(@"
                    INSERT INTO categories (name, type)
                     VALUES (@Category, @Type)
                     ON CONFLICT (name, type) DO NOTHING;", new Dictionary<string, object>
                     {
-                        { "@Category", record.Category },
+                        { "@Category", recordCategory },
                         { "@Type", recordType }
                     });
 
-                    var categoryId = await csvHelper.GetCategoryID(record.Category, recordType, connectionString);
+                    var categoryId = await csvHelper.GetCategoryID(recordCategory, recordType, connectionString);
                     var parameters = new Dictionary<string, object>
                     {
                         { "@Date", record.Date },
@@ -101,38 +102,4 @@ public class CSVController : ControllerBase
             return BadRequest("Failed to upload file and save data to the database");
         }
     }
-
-    // TODO: pretty sure this is a duplicate and can be removed
-    // [HttpGet("GetExpenses")]
-    // public async Task<IActionResult> GetExpenses()
-    // {
-    //     try
-    //     {
-    //         // Retrieve connection string from appsettings.json
-    //         var connectionString = _configuration.GetConnectionString("DefaultConnection");
-
-    //         // Check if connectionString is not null before using it
-    //         if (connectionString == null)
-    //         {
-    //             // Log or handle the situation where the connection string is not found
-    //             return BadRequest("Connection string not found in appsettings.json");
-    //         }
-
-    //         var dbHelper = new DBHelper(connectionString);
-
-    //         // Retrieve all data from the "expenses" table
-    //         var expenses = await dbHelper.QueryAsync<Expense>("SELECT * FROM expenses");
-
-    //         // Handle the retrieved data as needed
-    //         return Ok(expenses);
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         // Log the exception for debugging purposes
-    //         Console.WriteLine($"Error: {ex.Message}");
-
-    //         // You might want to provide a more user-friendly error message in a production environment
-    //         return BadRequest("Failed to retrieve data from the 'expenses' table");
-    //     }
-    // }
 }

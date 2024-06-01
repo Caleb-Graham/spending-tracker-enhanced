@@ -34,6 +34,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { UpdateCategoryComponent } from './components/categories/update-category/update-category.component';
 import { MatTreeModule } from '@angular/material/tree';
 import { ChartsComponent } from './components/charts/charts.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -57,7 +59,7 @@ import { ChartsComponent } from './components/charts/charts.component';
       maxAge: 25, // Retains last 25 states
       logOnly: false, // Restrict extension to log-only mode - may need to add this to the consumer instead of the lib.
     }),
-
+    MatDatepickerModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -76,7 +78,7 @@ import { ChartsComponent } from './components/charts/charts.component';
     MatSelectModule,
     MatTreeModule,
   ],
-  providers: [provideClientHydration()],
+  providers: [provideClientHydration(), provideNativeDateAdapter()],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

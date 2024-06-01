@@ -9,9 +9,9 @@ export const SpendingActions = createActionGroup({
   events: {
     getCategories: emptyProps(),
     getCategoriesSuccess: props<{ categories: Category[] }>(),
-    getExpenses: emptyProps(),
+    getExpenses: props<{ startDate?: Date; endDate?: Date }>(),
     getExpensesSuccess: props<{ expenses: Expense[] }>(),
-    getIncome: emptyProps(),
+    getIncome: props<{ startDate?: Date; endDate?: Date }>(),
     getIncomeSuccess: props<{ income: Income[] }>(),
     setActiveCategory: props<{ categoryType: 'Expense' | 'Income' }>(),
     addCategory: props<{

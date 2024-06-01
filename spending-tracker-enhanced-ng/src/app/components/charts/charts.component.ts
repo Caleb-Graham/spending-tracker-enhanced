@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ExpenseService } from '../../services/expense.service';
-import { Expense } from '../../models/expenses.model';
-import { IncomeService } from '../../services/income.service';
 import { ScaleType } from '@swimlane/ngx-charts';
 import { ChartsViewModel } from './charts.viewmodel';
 import { Observable } from 'rxjs';
@@ -14,10 +11,6 @@ import { selectChartsViewModel } from '../../state/selectors/spending.selector';
   styleUrl: './charts.component.scss',
 })
 export class ChartsComponent implements OnInit {
-  // expenses?: Expense[];
-  // income?: Expense[];
-  // expensePieChartData: any[] = [];
-  // incomePieChartData: any[] = [];
   view: [number, number] = [1500, 750];
 
   // options
@@ -28,52 +21,82 @@ export class ChartsComponent implements OnInit {
   legendPosition: any = 'below';
 
   colorScheme: any = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA'],
+    domain: [],
   };
 
   animations: boolean = true;
   tooltipDisabled = false;
-  customColors: any[] = [
-    {
-      name: 'Germany',
-      value: '#a8385d',
-    },
-  ];
   schemeType = ScaleType.Ordinal;
   sankeyData: any = [];
 
   chartsViewModel$: Observable<ChartsViewModel> =
     new Observable<ChartsViewModel>();
 
-  constructor(
-    private expenseService: ExpenseService,
-    private incomeService: IncomeService,
-    private store: Store
-  ) {}
+  constructor(private store: Store) {}
 
   ngOnInit() {
     this.chartsViewModel$ = this.store.select(selectChartsViewModel);
-    // this.expenseService.getExpenses().subscribe((expenses) => {
-    //   this.expenses = expenses;
 
-    //   this.expensePieChartData = this.expenses.map((expense) => ({
-    //     name: expense.category_Name,
-    //     value: Math.abs(expense.total_Amount),
-    //   }));
-    //   console.log('transformed expenses', this.expensePieChartData);
-    // });
-
-    // this.incomeService.getIncome().subscribe((income) => {
-    //   this.income = income;
-
-    //   this.incomePieChartData = this.income.map((income) => ({
-    //     name: income.category_Name,
-    //     value: Math.abs(income.total_Amount),
-    //   }));
-    //   console.log('transformed income', this.incomePieChartData);
-    // });
+    this.chartsViewModel$.subscribe((data: ChartsViewModel) => {
+      if (data && data.expensePieChart) {
+        this.colorScheme.domain = this.generateColorScheme(
+          data.expensePieChart.length
+        );
+      }
+    });
 
     // this.setSankeyData();
+  }
+
+  generateColorScheme(numberOfSlices: number): string[] {
+    const startColor = '#0050a0'; // Dark blue
+    const endColor = '#b0c4de'; // Light blue
+
+    const gradientColors = [];
+
+    // Calculate the step for the gradient
+    const step = 1 / numberOfSlices;
+
+    // Generate gradient colors
+    for (let i = 0; i < numberOfSlices; i++) {
+      const interpolatedColor = this.interpolateColor(
+        startColor,
+        endColor,
+        i * step
+      );
+      gradientColors.push(interpolatedColor);
+    }
+
+    return gradientColors;
+  }
+
+  // Function to interpolate color
+  interpolateColor(
+    startColor: string,
+    endColor: string,
+    ratio: number
+  ): string {
+    const r = Math.ceil(
+      parseInt(startColor.slice(1, 3), 16) * (1 - ratio) +
+        parseInt(endColor.slice(1, 3), 16) * ratio
+    );
+    const g = Math.ceil(
+      parseInt(startColor.slice(3, 5), 16) * (1 - ratio) +
+        parseInt(endColor.slice(3, 5), 16) * ratio
+    );
+    const b = Math.ceil(
+      parseInt(startColor.slice(5, 7), 16) * (1 - ratio) +
+        parseInt(endColor.slice(5, 7), 16) * ratio
+    );
+
+    return `#${this.componentToHex(r)}${this.componentToHex(
+      g
+    )}${this.componentToHex(b)}`;
+  }
+
+  componentToHex(c: number): string {
+    const hex = c.toString(16);
+    return hex.length === 1 ? '0' + hex : hex;
   }
 
   // setSankeyData() {

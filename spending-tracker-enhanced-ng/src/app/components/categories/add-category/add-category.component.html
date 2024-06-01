@@ -8,6 +8,7 @@
         [(ngModel)]="categoryName"
         name="categoryName"
         required
+        (keydown.enter)="onAddCategory(vm.activeCategory)"
       />
     </mat-form-field>
     <mat-form-field>

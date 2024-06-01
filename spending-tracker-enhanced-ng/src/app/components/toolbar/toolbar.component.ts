@@ -15,6 +15,8 @@ import {
   MatDialogContent,
 } from '@angular/material/dialog';
 import { AddCategoryComponent } from '../categories/add-category/add-category.component';
+import { Store } from '@ngrx/store';
+import { SpendingActions } from '../../state/actions/spending.actions';
 
 @Component({
   selector: 'app-toolbar',
@@ -23,11 +25,15 @@ import { AddCategoryComponent } from '../categories/add-category/add-category.co
 })
 export class ToolbarComponent {
   currentComponent: string = '';
+  selectedChartsDateValue: string = 'ytd';
+  startDate: Date | undefined;
+  endDate: Date | undefined;
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private store: Store
   ) {}
 
   ngOnInit(): void {
@@ -36,6 +42,8 @@ export class ToolbarComponent {
       .subscribe(() => {
         this.getCurrentComponent();
       });
+
+    this.handleOptionChange(this.selectedChartsDateValue);
   }
 
   getCurrentComponent(): void {
@@ -69,5 +77,63 @@ export class ToolbarComponent {
     this.dialog.open(AddCategoryComponent, {
       width: '400px',
     });
+  }
+
+  handleOptionChange(option: any) {
+    // Get today's date
+    const today = new Date();
+
+    // Update the date range based on the selected option
+    switch (option) {
+      case '30Days':
+        this.startDate = this.getStartDate(30);
+        this.endDate = today; // Today's date
+        break;
+      case '90Days':
+        this.startDate = this.getStartDate(90);
+        this.endDate = today; // Today's date
+        break;
+      case 'ytd':
+        this.startDate = new Date(today.getFullYear(), 0, 1); // Start of current year
+        this.endDate = today; // Today's date
+        break;
+      case '1Year':
+        this.startDate = new Date(
+          today.getFullYear() - 1,
+          today.getMonth(),
+          today.getDate()
+        ); // Today's date a year ago
+        this.endDate = today; // Today's date
+        break;
+      case 'lastYear':
+        const lastYearStart = new Date(today.getFullYear() - 1, 0, 1); // Start of last year
+        const lastYearEnd = new Date(today.getFullYear() - 1, 11, 31); // End of last year
+        this.startDate = lastYearStart;
+        this.endDate = lastYearEnd;
+        break;
+      case 'custom':
+        this.startDate = undefined;
+        this.endDate = undefined;
+        break;
+    }
+
+    this.store.dispatch(
+      SpendingActions.getExpenses({
+        startDate: this.startDate,
+        endDate: this.endDate,
+      })
+    );
+    this.store.dispatch(
+      SpendingActions.getIncome({
+        startDate: this.startDate,
+        endDate: this.endDate,
+      })
+    );
+  }
+
+  getStartDate(numDays: number): Date {
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - numDays);
+    return startDate;
   }
 }

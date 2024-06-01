@@ -15,8 +15,8 @@ export class AppComponent {
   ngOnInit() {
     // * dispatch actions for inital spending app state
     this.store.dispatch(SpendingActions.getCategories());
-    this.store.dispatch(SpendingActions.getExpenses());
-    this.store.dispatch(SpendingActions.getIncome());
+    // this.store.dispatch(SpendingActions.getExpenses());
+    // this.store.dispatch(SpendingActions.getIncome());
   }
 
   getMenuState($event: any) {
