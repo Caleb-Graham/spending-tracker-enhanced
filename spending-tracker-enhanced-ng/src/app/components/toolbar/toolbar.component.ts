@@ -79,56 +79,54 @@ export class ToolbarComponent {
     });
   }
 
-  handleOptionChange(option: any) {
-    // Get today's date
+  handleOptionChange(option: string) {
     const today = new Date();
 
-    // Update the date range based on the selected option
     switch (option) {
       case '30Days':
         this.startDate = this.getStartDate(30);
-        this.endDate = today; // Today's date
+        this.endDate = today;
         break;
       case '90Days':
         this.startDate = this.getStartDate(90);
-        this.endDate = today; // Today's date
+        this.endDate = today;
         break;
       case 'ytd':
-        this.startDate = new Date(today.getFullYear(), 0, 1); // Start of current year
-        this.endDate = today; // Today's date
+        this.startDate = new Date(today.getFullYear(), 0, 1);
+        this.endDate = today;
         break;
       case '1Year':
         this.startDate = new Date(
           today.getFullYear() - 1,
           today.getMonth(),
           today.getDate()
-        ); // Today's date a year ago
-        this.endDate = today; // Today's date
+        );
+        this.endDate = today;
         break;
       case 'lastYear':
-        const lastYearStart = new Date(today.getFullYear() - 1, 0, 1); // Start of last year
-        const lastYearEnd = new Date(today.getFullYear() - 1, 11, 31); // End of last year
+        const lastYearStart = new Date(today.getFullYear() - 1, 0, 1);
+        const lastYearEnd = new Date(today.getFullYear() - 1, 11, 31);
         this.startDate = lastYearStart;
         this.endDate = lastYearEnd;
         break;
       case 'custom':
-        this.startDate = undefined;
-        this.endDate = undefined;
         break;
     }
 
-    this.store.dispatch(
-      SpendingActions.getExpenses({
-        startDate: this.startDate,
-        endDate: this.endDate,
-      })
-    );
-    this.store.dispatch(
-      SpendingActions.getIncome({
-        startDate: this.startDate,
-        endDate: this.endDate,
-      })
-    );
+    if (this.startDate && this.endDate) {
+      this.store.dispatch(
+        SpendingActions.getExpenses({
+          startDate: this.startDate,
+          endDate: this.endDate,
+        })
+      );
+      this.store.dispatch(
+        SpendingActions.getIncome({
+          startDate: this.startDate,
+          endDate: this.endDate,
+        })
+      );
+    }
   }
 
   getStartDate(numDays: number): Date {

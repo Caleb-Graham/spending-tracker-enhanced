@@ -72,7 +72,7 @@ public class ExpensesController : ControllerBase
             FROM AggregatedExpenses ae
             JOIN categories ch ON ae.top_level_category_id = ch.category_id
             GROUP BY ch.name
-            ORDER BY total_amount DESC;";
+            ORDER BY total_amount ASC";
 
             // Retrieve data using the constructed SQL query
             var expenses = await dbHelper.QueryAsync<Expense>(sqlQuery);

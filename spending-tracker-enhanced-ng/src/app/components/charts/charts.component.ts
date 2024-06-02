@@ -49,8 +49,8 @@ export class ChartsComponent implements OnInit {
   }
 
   generateColorScheme(numberOfSlices: number): string[] {
-    const startColor = '#0050a0'; // Dark blue
-    const endColor = '#b0c4de'; // Light blue
+    const startColor = '#0418c9'; // Dark blue
+    const endColor = '#bde0f2'; // Light blue
 
     const gradientColors = [];
 

@@ -72,7 +72,7 @@ public class IncomeController : ControllerBase
             FROM AggregatedIncome ai
             INNER JOIN categories ch ON ai.top_level_category_id = ch.category_id
             GROUP BY ch.name
-            ORDER BY total_amount DESC;";
+            ORDER BY total_amount ASC";
 
             // Retrieve data using the constructed SQL query
             var income = await dbHelper.QueryAsync<Income>(sqlQuery);

@@ -32,13 +32,13 @@
           matStartDate
           placeholder="Start date"
           [(ngModel)]="startDate"
-          (dateChange)="selectedChartsDateValue = 'custom'"
+          (dateChange)="handleOptionChange('custom')"
         />
         <input
           matEndDate
           placeholder="End date"
           [(ngModel)]="endDate"
-          (dateChange)="selectedChartsDateValue = 'custom'"
+          (dateChange)="handleOptionChange('custom')"
         />
       </mat-date-range-input>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
