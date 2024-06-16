@@ -6,5 +6,6 @@ export interface Expense {
   //   description: string;
   // date: Date;
   category_Name: string;
+  percent_Of_Total: number;
   //   category_Type: string;
 }

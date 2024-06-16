@@ -13,8 +13,10 @@ export const {
   name,
   reducer,
   selectCategories,
-  selectExpenses,
-  selectIncome,
+  selectParentExpenses,
+  selectChildExpenses,
+  selectParentIncome,
+  selectChildIncome,
   selectActiveCategory,
 } = spendingFeature;
 

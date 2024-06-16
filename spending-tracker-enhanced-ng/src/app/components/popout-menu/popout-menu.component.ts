@@ -40,9 +40,8 @@ export class PopoutMenuComponent {
     { tabName: 'My Spending', tabRoute: '/my-spending' },
     { tabName: 'Categories', tabRoute: '/categories' },
     { tabName: 'Summary', tabRoute: '/summary' },
-    { tabName: 'Charts', tabRoute: '/charts' },
-    { tabName: 'Net Worth', tabRoute: '/net-worth' },
     { tabName: 'Planning', tabRoute: '/planning' },
+    { tabName: 'Net Worth', tabRoute: '/net-worth' },
   ];
 
   constructor(private menuService: MenuService) {}

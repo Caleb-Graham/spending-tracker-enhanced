@@ -1,0 +1,44 @@
+.summary-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.pie-container {
+    display: flex;
+    flex-direction: row;
+}
+
+table {
+    width: 80%;
+    padding: 3px;
+    border-collapse: collapse;
+    border: 1px solid #bbb;
+    
+    tr {
+      border: 1px solid #bbb;
+      padding: 3px;
+    }
+  
+    .border-right {
+      border-right: 1px solid #bbb;
+    }
+    .header {
+      font-size: 0.9rem;
+      text-align: left;
+      color: #555;
+      background-color: #ccc;
+    }
+  
+    .category-name {
+     width: 60%;
+    }
+
+    td {
+      padding: 3px;
+      text-align: center;
+      text-align: left;
+      border-right: 1px solid #bbb;
+      width: 20%;
+    }
+  }

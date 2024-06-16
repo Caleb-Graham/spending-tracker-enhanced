@@ -2,11 +2,15 @@ import { createSelector } from '@ngrx/store';
 import {
   selectActiveCategory,
   selectCategories,
-  selectExpenses,
-  selectIncome,
+  selectChildExpenses,
+  selectChildIncome,
+  selectParentExpenses,
+  selectParentIncome,
 } from '../features/spending.features';
 import { CategoriesViewModel } from '../../components/categories/categories.viewmodel';
-import { ChartsViewModel } from '../../components/charts/charts.viewmodel';
+import { SummaryViewModel } from '../../components/summary/summary.viewmodel';
+import { Expense } from '../../models/expenses.model';
+import { Income } from '../../models/income.model';
 
 export const selectCategoriesViewModel = createSelector(
   selectCategories,
@@ -21,36 +25,43 @@ export const selectCategoriesViewModel = createSelector(
 );
 
 export const selectChartsViewModel = createSelector(
-  selectExpenses,
-  selectIncome,
-  (expenses, income) => {
-    const totalExpenseAmount = expenses.reduce(
+  selectParentExpenses,
+  selectParentIncome,
+  selectChildExpenses,
+  selectChildIncome,
+  (
+    parentExpenses: Expense[],
+    parentIncome: Income[],
+    childExpenses: Expense[],
+    childIncome: Income[]
+  ) => {
+    const totalExpenseAmount = parentExpenses.reduce(
       (sum, expense) => sum + Math.abs(expense.total_Amount),
       0
     );
-    const totalIncomeAmount = income.reduce(
+    const totalIncomeAmount = parentIncome.reduce(
       (sum, income) => sum + Math.abs(income.total_Amount),
       0
     );
 
-    const expensePieChartData = expenses.map((expense) => {
-      const percentage = (
-        (Math.abs(expense.total_Amount) / totalExpenseAmount) *
-        100
-      ).toFixed(2);
+    const expensePieChartData = parentExpenses.map((expense) => {
+      const percentage = totalExpenseAmount
+        ? ((Math.abs(expense.total_Amount) / totalExpenseAmount) * 100).toFixed(
+            2
+          )
+        : '0.00';
       return {
-        name: `${expense.category_Name} (${percentage}%)`,
+        name: `${expense.category_Name}: ${percentage}%`,
         value: Math.abs(expense.total_Amount),
       };
     });
 
-    const incomePieChartData = income.map((income) => {
-      const percentage = (
-        (Math.abs(income.total_Amount) / totalIncomeAmount) *
-        100
-      ).toFixed(2);
+    const incomePieChartData = parentIncome.map((income) => {
+      const percentage = totalIncomeAmount
+        ? ((Math.abs(income.total_Amount) / totalIncomeAmount) * 100).toFixed(2)
+        : '0.00';
       return {
-        name: `${income.category_Name} (${percentage}%)`,
+        name: `${income.category_Name}: ${percentage}%`,
         value: Math.abs(income.total_Amount),
       };
     });
@@ -58,6 +69,22 @@ export const selectChartsViewModel = createSelector(
     return {
       expensePieChart: expensePieChartData,
       incomePieChart: incomePieChartData,
-    } as ChartsViewModel;
+      parentExpenses: parentExpenses.map((expense) => ({
+        ...expense,
+        total_Amount: Math.abs(expense.total_Amount),
+      })),
+      childExpenses: childExpenses.map((expense) => ({
+        ...expense,
+        total_Amount: Math.abs(expense.total_Amount),
+      })),
+      parentIncome: parentIncome.map((income) => ({
+        ...income,
+        total_Amount: Math.abs(income.total_Amount),
+      })),
+      childIncome: childIncome.map((income) => ({
+        ...income,
+        total_Amount: Math.abs(income.total_Amount),
+      })),
+    } as SummaryViewModel;
   }
 );

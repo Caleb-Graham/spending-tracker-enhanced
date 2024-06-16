@@ -33,7 +33,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { UpdateCategoryComponent } from './components/categories/update-category/update-category.component';
 import { MatTreeModule } from '@angular/material/tree';
-import { ChartsComponent } from './components/charts/charts.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 
@@ -49,7 +48,6 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     ToolbarComponent,
     AddCategoryComponent,
     UpdateCategoryComponent,
-    ChartsComponent,
   ],
   imports: [
     EffectsModule.forRoot([SpendingEffects]),

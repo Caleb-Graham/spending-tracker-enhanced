@@ -13,8 +13,8 @@ public class IncomeController : ControllerBase
         _configuration = configuration;
     }
 
-    [HttpGet("GetIncome")]
-    public async Task<IActionResult> GetIncome([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
+    [HttpGet("GetParentIncome")]
+    public async Task<IActionResult> GetParentIncome([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
     {
         try
         {
@@ -68,7 +68,10 @@ public class IncomeController : ControllerBase
             sqlQuery += @"
             )
             -- Aggregate income for each top-level category
-            SELECT ch.name AS category_name, SUM(ai.amount) AS total_amount
+            SELECT 
+                ch.name AS category_name, 
+                SUM(ai.amount) AS total_amount,
+                SUM(ai.amount) * 100.0 / SUM(SUM(ai.amount)) OVER () AS percent_of_total
             FROM AggregatedIncome ai
             INNER JOIN categories ch ON ai.top_level_category_id = ch.category_id
             GROUP BY ch.name
@@ -85,6 +88,65 @@ public class IncomeController : ControllerBase
             // Log the exception for debugging purposes
             Console.WriteLine($"Error: {ex.Message}");
 
+            return BadRequest("Failed to retrieve data from the 'income' table");
+        }
+    }
+
+    [HttpGet("GetChildIncome")]
+    public async Task<IActionResult> GetChildIncome([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
+    {
+        try
+        {
+            // Retrieve connection string from appsettings.json
+            var connectionString = _configuration.GetConnectionString("DefaultConnection");
+
+            // Check if connectionString is not null before using it
+            if (connectionString == null)
+            {
+                return BadRequest("Connection string not found in appsettings.json");
+            }
+
+            var dbHelper = new DBHelper(connectionString);
+
+            // Base SQL query
+            string sqlQuery = @"
+            SELECT
+                categories.name AS category_name,
+                SUM(income.amount) AS total_amount,
+                SUM(income.amount) * 100.0 / SUM(SUM(income.amount)) OVER () AS percent_of_total
+            FROM
+                income
+            JOIN
+                categories ON income.category_id = categories.category_id";
+
+            // Append condition for start date if provided
+            if (startDate.HasValue)
+            {
+                sqlQuery += $" WHERE income.date >= '{startDate.Value:yyyy-MM-dd}'";
+            }
+
+            // Append condition for end date if provided
+            if (endDate.HasValue)
+            {
+                sqlQuery += (startDate.HasValue ? " AND" : " WHERE") + $" income.date <= '{endDate.Value:yyyy-MM-dd}'";
+            }
+
+            // Continue with grouping and ordering
+            sqlQuery += @"
+            GROUP BY
+                categories.name
+            ORDER BY
+                total_amount ASC";
+
+            // Retrieve data using the constructed SQL query
+            var income = await dbHelper.QueryAsync<Income>(sqlQuery);
+
+            return Ok(income);
+        }
+        catch (Exception ex)
+        {
+            // Log the exception for debugging purposes
+            Console.WriteLine($"Error: {ex.Message}");
             return BadRequest("Failed to retrieve data from the 'income' table");
         }
     }

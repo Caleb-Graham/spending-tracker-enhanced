@@ -4,8 +4,10 @@ import { SpendingActions } from '../actions/spending.actions';
 
 export const initalState: SpendingState = {
   categories: [],
-  expenses: [],
-  income: [],
+  parentExpenses: [],
+  childExpenses: [],
+  parentIncome: [],
+  childIncome: [],
   activeCategory: 'Expense',
 };
 
@@ -13,20 +15,28 @@ export const spendingReducer = createReducer(
   initalState,
 
   // * sets expenses state
-  on(SpendingActions.getExpensesSuccess, (state, { expenses }) => {
-    return {
-      ...state,
-      expenses: expenses,
-    };
-  }),
+  on(
+    SpendingActions.getExpensesSuccess,
+    (state, { parentExpenses, childExpenses }) => {
+      return {
+        ...state,
+        parentExpenses: parentExpenses,
+        childExpenses: childExpenses,
+      };
+    }
+  ),
 
   // * sets income state
-  on(SpendingActions.getIncomeSuccess, (state, { income }) => {
-    return {
-      ...state,
-      income: income,
-    };
-  }),
+  on(
+    SpendingActions.getIncomeSuccess,
+    (state, { parentIncome, childIncome }) => {
+      return {
+        ...state,
+        parentIncome: parentIncome,
+        childIncome: childIncome,
+      };
+    }
+  ),
 
   // * sets category state
   on(SpendingActions.getCategoriesSuccess, (state, { categories }) => {

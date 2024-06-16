@@ -11,7 +11,7 @@ export class ExpenseService {
 
   constructor(private http: HttpClient) {}
 
-  getExpenses(startDate?: Date, endDate?: Date): Observable<Expense[]> {
+  getParentExpenses(startDate?: Date, endDate?: Date): Observable<Expense[]> {
     let params = new HttpParams();
 
     // Add start date query parameter if provided
@@ -25,7 +25,30 @@ export class ExpenseService {
     }
 
     return this.http
-      .get<Expense[]>(`${this.apiUrl}/Expenses/GetExpenses`, { params })
+      .get<Expense[]>(`${this.apiUrl}/Expenses/GetParentExpenses`, { params })
+      .pipe(
+        catchError((error) => {
+          console.error('Get all expenses error:', error);
+          return throwError(() => new Error('Failed to get expenses'));
+        })
+      );
+  }
+
+  getChildExpenses(startDate?: Date, endDate?: Date): Observable<Expense[]> {
+    let params = new HttpParams();
+
+    // Add start date query parameter if provided
+    if (startDate) {
+      params = params.set('startDate', startDate.toISOString()); // Convert to ISO string format
+    }
+
+    // Add end date query parameter if provided
+    if (endDate) {
+      params = params.set('endDate', endDate.toISOString()); // Convert to ISO string format
+    }
+
+    return this.http
+      .get<Expense[]>(`${this.apiUrl}/Expenses/GetChildExpenses`, { params })
       .pipe(
         catchError((error) => {
           console.error('Get all expenses error:', error);

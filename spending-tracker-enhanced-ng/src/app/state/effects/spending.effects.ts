@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { SpendingActions } from '../actions/spending.actions';
-import { of, switchMap } from 'rxjs';
+import { catchError, forkJoin, map, of, switchMap } from 'rxjs';
 import { CategoriesService } from '../../services/categories.service';
 import { Category } from '../../models/category.model';
 import { ExpenseService } from '../../services/expense.service';
@@ -34,39 +34,55 @@ export class SpendingEffects {
     );
   });
 
-  getExpenses$ = createEffect(() => {
-    return this.actions$.pipe(
+  getExpenses$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(SpendingActions.getExpenses),
-      switchMap((action) => {
-        return this.expensesService
-          .getExpenses(action.startDate, action.endDate)
-          .pipe(
-            switchMap((expenses: Expense[]) => {
-              return of({
-                type: SpendingActions.getExpensesSuccess.type,
-                expenses: expenses,
-              });
-            })
-          );
-      })
-    );
-  });
-
-  getIncome$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(SpendingActions.getIncome),
-      switchMap(() => {
-        return this.incomeService.getIncome().pipe(
-          switchMap((income: Income[]) => {
-            return of({
-              type: SpendingActions.getIncomeSuccess.type,
-              income: income,
+      switchMap((action) =>
+        forkJoin({
+          parentExpenses: this.expensesService.getParentExpenses(
+            action.startDate,
+            action.endDate
+          ),
+          childExpenses: this.expensesService.getChildExpenses(
+            action.startDate,
+            action.endDate
+          ),
+        }).pipe(
+          map(({ parentExpenses, childExpenses }) => {
+            return SpendingActions.getExpensesSuccess({
+              parentExpenses: parentExpenses,
+              childExpenses: childExpenses,
             });
           })
-        );
-      })
-    );
-  });
+        )
+      )
+    )
+  );
+
+  getIncome$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SpendingActions.getIncome),
+      switchMap((action) =>
+        forkJoin({
+          parentIncome: this.incomeService.getParentIncome(
+            action.startDate,
+            action.endDate
+          ),
+          childIncome: this.incomeService.getChildIncome(
+            action.startDate,
+            action.endDate
+          ),
+        }).pipe(
+          map(({ parentIncome, childIncome }) => {
+            return SpendingActions.getIncomeSuccess({
+              parentIncome: parentIncome,
+              childIncome: childIncome,
+            });
+          })
+        )
+      )
+    )
+  );
 
   addCategory$ = createEffect(() => {
     return this.actions$.pipe(

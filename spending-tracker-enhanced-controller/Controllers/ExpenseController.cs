@@ -13,8 +13,8 @@ public class ExpensesController : ControllerBase
         _configuration = configuration;
     }
 
-    [HttpGet("GetExpenses")]
-    public async Task<IActionResult> GetExpenses([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
+    [HttpGet("GetParentExpenses")]
+    public async Task<IActionResult> GetParentExpenses([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
     {
         try
         {
@@ -68,7 +68,10 @@ public class ExpensesController : ControllerBase
             sqlQuery += @"
             )
             -- Aggregate expenses for each top-level category
-            SELECT ch.name AS category_name, SUM(ae.amount) AS total_amount
+            SELECT 
+                ch.name AS category_name,
+                SUM(ae.amount) AS total_amount,
+                SUM(ae.amount) * 100.0 / SUM(SUM(ae.amount)) OVER () AS percent_of_total
             FROM AggregatedExpenses ae
             JOIN categories ch ON ae.top_level_category_id = ch.category_id
             GROUP BY ch.name
@@ -85,6 +88,65 @@ public class ExpensesController : ControllerBase
             // Log the exception for debugging purposes
             Console.WriteLine($"Error: {ex.Message}");
 
+            return BadRequest("Failed to retrieve data from the 'expenses' table");
+        }
+    }
+
+    [HttpGet("GetChildExpenses")]
+    public async Task<IActionResult> GetChildExpenses([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
+    {
+        try
+        {
+            // Retrieve connection string from appsettings.json
+            var connectionString = _configuration.GetConnectionString("DefaultConnection");
+
+            // Check if connectionString is not null before using it
+            if (connectionString == null)
+            {
+                return BadRequest("Connection string not found in appsettings.json");
+            }
+
+            var dbHelper = new DBHelper(connectionString);
+
+            // Base SQL query
+            string sqlQuery = @"
+            SELECT
+                categories.name AS category_name,
+                SUM(expenses.amount) AS total_amount,
+                SUM(expenses.amount) * 100.0 / SUM(SUM(expenses.amount)) OVER () AS percent_of_total
+            FROM
+                expenses
+            JOIN
+                categories ON expenses.category_id = categories.category_id";
+
+            // Append condition for start date if provided
+            if (startDate.HasValue)
+            {
+                sqlQuery += $" WHERE expenses.date >= '{startDate.Value:yyyy-MM-dd}'";
+            }
+
+            // Append condition for end date if provided
+            if (endDate.HasValue)
+            {
+                sqlQuery += (startDate.HasValue ? " AND" : " WHERE") + $" expenses.date <= '{endDate.Value:yyyy-MM-dd}'";
+            }
+
+            // Continue with grouping and ordering
+            sqlQuery += @"
+            GROUP BY
+                categories.name
+            ORDER BY
+                total_amount ASC";
+
+            // Retrieve data using the constructed SQL query
+            var expenses = await dbHelper.QueryAsync<Expense>(sqlQuery);
+
+            return Ok(expenses);
+        }
+        catch (Exception ex)
+        {
+            // Log the exception for debugging purposes
+            Console.WriteLine($"Error: {ex.Message}");
             return BadRequest("Failed to retrieve data from the 'expenses' table");
         }
     }

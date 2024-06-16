@@ -4,7 +4,9 @@ import { Income } from '../models/income.model';
 
 export interface SpendingState {
   categories: Category[];
-  expenses: Expense[];
-  income: Income[];
+  parentExpenses: Expense[];
+  childExpenses: Expense[];
+  parentIncome: Income[];
+  childIncome: Income[];
   activeCategory: 'Expense' | 'Income';
 }
