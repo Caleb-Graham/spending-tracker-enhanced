@@ -35,6 +35,7 @@ import { UpdateCategoryComponent } from './components/categories/update-category
 import { MatTreeModule } from '@angular/material/tree';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { PlanningComponent } from './components/planning/planning.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     ToolbarComponent,
     AddCategoryComponent,
     UpdateCategoryComponent,
+    PlanningComponent,
   ],
   imports: [
     EffectsModule.forRoot([SpendingEffects]),
