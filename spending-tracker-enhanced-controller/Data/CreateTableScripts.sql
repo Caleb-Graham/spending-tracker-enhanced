@@ -41,21 +41,19 @@ CREATE TABLE income
 );
 
 -- Account Table
-CREATE TABLE accounts
+CREATE TABLE net_worth_accounts
 (
     account_id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users(user_id),
     name VARCHAR(50) NOT NULL,
-    type VARCHAR(50) NOT NULL,
-    balance DECIMAL(10, 2) NOT NULL
+    type VARCHAR(50) NOT NULL
 );
 
 -- NetWorth Table
-CREATE TABLE net_worth
+CREATE TABLE account_balance
 (
-    net_worth_id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES users(user_id),
+    account_balance_id SERIAL PRIMARY KEY,
+    account_id INT REFERENCES net_worth_accounts(account_id),
     date DATE NOT NULL,
-    total_assets DECIMAL(10, 2) NOT NULL,
-    total_liabilities DECIMAL(10, 2) NOT NULL
+    balance DECIMAL(10, 2) NOT NULL
 );

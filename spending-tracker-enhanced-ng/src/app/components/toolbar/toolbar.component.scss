@@ -19,3 +19,7 @@
     height: 1px;
     margin-right: 1rem;
 }
+
+::ng-deep .mat-mdc-text-field-wrapper{
+    margin-bottom: -1.25em;
+ }

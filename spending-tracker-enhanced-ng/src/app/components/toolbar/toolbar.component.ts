@@ -6,14 +6,7 @@ import {
   Router,
 } from '@angular/router';
 import { filter } from 'rxjs';
-import {
-  MatDialog,
-  MatDialogRef,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogTitle,
-  MatDialogContent,
-} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { AddCategoryComponent } from '../categories/add-category/add-category.component';
 import { Store } from '@ngrx/store';
 import { SpendingActions } from '../../state/actions/spending.actions';
