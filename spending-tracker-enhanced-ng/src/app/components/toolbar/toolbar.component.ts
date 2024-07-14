@@ -74,14 +74,15 @@ export class ToolbarComponent {
 
   handleOptionChange(option: string) {
     const today = new Date();
+    today.setHours(0, 0, 0, 0); // Reset the time to avoid any discrepancies
 
     switch (option) {
-      case '30Days':
-        this.startDate = this.getStartDate(30);
+      case 'month':
+        this.startDate = new Date(today.getFullYear(), today.getMonth(), 1);
         this.endDate = today;
         break;
-      case '90Days':
-        this.startDate = this.getStartDate(90);
+      case '3months':
+        this.startDate = new Date(today.getFullYear(), today.getMonth() - 3, 1);
         this.endDate = today;
         break;
       case 'ytd':
@@ -120,11 +121,5 @@ export class ToolbarComponent {
         })
       );
     }
-  }
-
-  getStartDate(numDays: number): Date {
-    const startDate = new Date();
-    startDate.setDate(startDate.getDate() - numDays);
-    return startDate;
   }
 }

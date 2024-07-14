@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ScaleType } from '@swimlane/ngx-charts';
 import { Observable } from 'rxjs';
@@ -32,7 +32,7 @@ export class SummaryComponent implements OnInit {
   chartsViewModel$: Observable<SummaryViewModel> =
     new Observable<SummaryViewModel>();
 
-  constructor(private store: Store) {}
+  constructor(private store: Store, private cdRef: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.chartsViewModel$ = this.store.select(selectChartsViewModel);
@@ -46,6 +46,11 @@ export class SummaryComponent implements OnInit {
     });
 
     // this.setSankeyData();
+  }
+
+  ngAfterViewChecked() {
+    // Manually detect changes
+    this.cdRef.detectChanges();
   }
 
   generateColorScheme(numberOfSlices: number): string[] {

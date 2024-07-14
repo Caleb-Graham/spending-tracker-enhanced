@@ -2,54 +2,60 @@
 
 <div class="summary-container">
   <table>
-    <tr class="header">
-      <td class="category-name">Income</td>
-      <td>Percentage</td>
-      <td>Total</td>
-    </tr>
-    @for (expense of vm.childIncome; track $index) {
-    <tr>
-      <td class="category-name">{{ expense.category_Name }}</td>
-      <td class="name">
-        {{ expense.percent_Of_Total / 100 | percent : "1.2-2" }}
-      </td>
-      <td class="name">{{ expense.total_Amount | currency }}</td>
-    </tr>
-    }
+    <thead>
+      <tr class="header">
+        <td class="category-name">Income</td>
+        <td>Percentage</td>
+        <td>Total</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let income of vm.childIncome; index as $index">
+        <td class="category-name">{{ income.category_Name }}</td>
+        <td class="name">
+          {{ income.percent_Of_Total / 100 | percent : "1.2-2" }}
+        </td>
+        <td class="name">{{ income.total_Amount | currency }}</td>
+      </tr>
+    </tbody>
   </table>
 
   <table>
-    <tr class="header">
-      <td class="category-name">Expenses, Investments, & Savings</td>
-      <td>Percentage</td>
-      <td>Total</td>
-    </tr>
-    @for (expense of vm.childExpenses; track $index) {
-    <tr>
-      <td class="category-name">{{ expense.category_Name }}</td>
-      <td class="name">
-        {{ expense.percent_Of_Total / 100 | percent : "1.2-2" }}
-      </td>
-      <td class="name">{{ expense.total_Amount | currency }}</td>
-    </tr>
-    }
+    <thead>
+      <tr class="header">
+        <td class="category-name">Expenses, Investments, & Savings</td>
+        <td>Percentage</td>
+        <td>Total</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let expense of vm.childExpenses; index as $index">
+        <td class="category-name">{{ expense.category_Name }}</td>
+        <td class="name">
+          {{ expense.percent_Of_Total / 100 | percent : "1.2-2" }}
+        </td>
+        <td class="name">{{ expense.total_Amount | currency }}</td>
+      </tr>
+    </tbody>
   </table>
 
   <table>
-    <tr class="header">
-      <td class="category-name">Category Breakdown</td>
-      <td>Percentage</td>
-      <td>Total</td>
-    </tr>
-    @for (expense of vm.parentExpenses; track $index) {
-    <tr>
-      <td class="category-name">{{ expense.category_Name }}</td>
-      <td class="name">
-        {{ expense.percent_Of_Total / 100 | percent : "1.2-2" }}
-      </td>
-      <td class="name">{{ expense.total_Amount | currency }}</td>
-    </tr>
-    }
+    <thead>
+      <tr class="header">
+        <td class="category-name">Category Breakdown</td>
+        <td>Percentage</td>
+        <td>Total</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let expense of vm.parentExpenses; index as $index">
+        <td class="category-name">{{ expense.category_Name }}</td>
+        <td class="name">
+          {{ expense.percent_Of_Total / 100 | percent : "1.2-2" }}
+        </td>
+        <td class="name">{{ expense.total_Amount | currency }}</td>
+      </tr>
+    </tbody>
   </table>
 
   <ngx-charts-pie-chart

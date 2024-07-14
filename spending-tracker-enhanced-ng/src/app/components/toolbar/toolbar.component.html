@@ -10,14 +10,14 @@
   </button>
   } @case ('summary') {
   <div class="summary-container">
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="no-bottom">
       <mat-label>Select</mat-label>
       <mat-select
         [(value)]="selectedChartsDateValue"
         (selectionChange)="handleOptionChange($event.value)"
       >
-        <mat-option value="30Days">30 Days</mat-option>
-        <mat-option value="90Days">90 Days</mat-option>
+        <mat-option value="month">Current Month</mat-option>
+        <mat-option value="3months">Last 3 Months</mat-option>
         <mat-option value="ytd">Year to Date</mat-option>
         <mat-option value="1Year">1 Year</mat-option>
         <mat-option value="lastYear">Last Year</mat-option>
@@ -25,7 +25,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="no-bottom">
       <mat-label>Enter a date range</mat-label>
       <mat-date-range-input [rangePicker]="picker">
         <input
@@ -51,14 +51,14 @@
   </div>
   } @case ('networth') {
   <div class="summary-container">
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="no-bottom">
       <mat-label>Select</mat-label>
       <mat-select
         [(value)]="selectedChartsDateValue"
         (selectionChange)="handleOptionChange($event.value)"
       >
-        <mat-option value="30Days">30 Days</mat-option>
-        <mat-option value="90Days">90 Days</mat-option>
+        <mat-option value="month">Current Month</mat-option>
+        <mat-option value="3months">Last 3 Months</mat-option>
         <mat-option value="ytd">Year to Date</mat-option>
         <mat-option value="1Year">1 Year</mat-option>
         <mat-option value="lastYear">Last Year</mat-option>
@@ -66,7 +66,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="no-bottom">
       <mat-label>Enter a date range</mat-label>
       <mat-date-range-input [rangePicker]="picker">
         <input
