@@ -29,6 +29,15 @@ export class SummaryComponent implements OnInit {
   schemeType = ScaleType.Ordinal;
   sankeyData: any = [];
 
+  incomeTotalPercent: number = 0;
+  incomeTotalAmount: number = 0;
+
+  expenseTotalPercent: number = 0;
+  expenseTotalAmount: number = 0;
+
+  categoryTotalPercent: number = 0;
+  categoryTotalAmount: number = 0;
+
   chartsViewModel$: Observable<SummaryViewModel> =
     new Observable<SummaryViewModel>();
 
@@ -43,6 +52,10 @@ export class SummaryComponent implements OnInit {
           data.expensePieChart.length
         );
       }
+
+      this.calculateIncomeTotals(data);
+      this.calculateExpenseTotals(data);
+      this.calculateCategoryTotals(data);
     });
 
     // this.setSankeyData();
@@ -51,6 +64,39 @@ export class SummaryComponent implements OnInit {
   ngAfterViewChecked() {
     // Manually detect changes
     this.cdRef.detectChanges();
+  }
+
+  calculateIncomeTotals(vm: SummaryViewModel) {
+    this.incomeTotalPercent = vm.childExpenses.reduce(
+      (acc, income) => acc + income.percent_Of_Total,
+      0
+    );
+    this.incomeTotalAmount = vm.childExpenses.reduce(
+      (acc, income) => acc + income.total_Amount,
+      0
+    );
+  }
+
+  calculateExpenseTotals(vm: SummaryViewModel) {
+    this.expenseTotalPercent = vm.childExpenses.reduce(
+      (acc, expense) => acc + expense.percent_Of_Total,
+      0
+    );
+    this.expenseTotalAmount = vm.childExpenses.reduce(
+      (acc, expense) => acc + expense.total_Amount,
+      0
+    );
+  }
+
+  calculateCategoryTotals(vm: SummaryViewModel) {
+    this.categoryTotalPercent = vm.parentExpenses.reduce(
+      (acc, category) => acc + category.percent_Of_Total,
+      0
+    );
+    this.categoryTotalAmount = vm.parentExpenses.reduce(
+      (acc, category) => acc + category.total_Amount,
+      0
+    );
   }
 
   generateColorScheme(numberOfSlices: number): string[] {

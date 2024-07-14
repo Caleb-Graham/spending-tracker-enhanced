@@ -12,12 +12,21 @@
     <tbody>
       <tr *ngFor="let income of vm.childIncome; index as $index">
         <td class="category-name">{{ income.category_Name }}</td>
-        <td class="name">
+        <td>
           {{ income.percent_Of_Total / 100 | percent : "1.2-2" }}
         </td>
-        <td class="name">{{ income.total_Amount | currency }}</td>
+        <td>{{ income.total_Amount | currency }}</td>
       </tr>
     </tbody>
+    <tfoot>
+      <tr>
+        <td class="category-name"><strong>Total</strong></td>
+        <td class="bold">
+          {{ incomeTotalPercent / 100 | percent : "1.2-2" }}
+        </td>
+        <td class="bold">{{ incomeTotalAmount | currency }}</td>
+      </tr>
+    </tfoot>
   </table>
 
   <table>
@@ -31,12 +40,21 @@
     <tbody>
       <tr *ngFor="let expense of vm.childExpenses; index as $index">
         <td class="category-name">{{ expense.category_Name }}</td>
-        <td class="name">
+        <td>
           {{ expense.percent_Of_Total / 100 | percent : "1.2-2" }}
         </td>
-        <td class="name">{{ expense.total_Amount | currency }}</td>
+        <td>{{ expense.total_Amount | currency }}</td>
       </tr>
     </tbody>
+    <tfoot>
+      <tr>
+        <td class="category-name"><strong>Total</strong></td>
+        <td class="bold">
+          {{ expenseTotalPercent / 100 | percent : "1.2-2" }}
+        </td>
+        <td class="bold">{{ expenseTotalAmount | currency }}</td>
+      </tr>
+    </tfoot>
   </table>
 
   <table>
@@ -50,12 +68,21 @@
     <tbody>
       <tr *ngFor="let expense of vm.parentExpenses; index as $index">
         <td class="category-name">{{ expense.category_Name }}</td>
-        <td class="name">
+        <td>
           {{ expense.percent_Of_Total / 100 | percent : "1.2-2" }}
         </td>
-        <td class="name">{{ expense.total_Amount | currency }}</td>
+        <td>{{ expense.total_Amount | currency }}</td>
       </tr>
     </tbody>
+    <tfoot>
+      <tr>
+        <td class="category-name"><strong>Total</strong></td>
+        <td class="bold">
+          {{ categoryTotalPercent / 100 | percent : "1.2-2" }}
+        </td>
+        <td class="bold">{{ categoryTotalAmount | currency }}</td>
+      </tr>
+    </tfoot>
   </table>
 
   <ngx-charts-pie-chart
